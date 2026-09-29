@@ -1,0 +1,10 @@
+LAB 06 - REFLECTION NOTES
+
+1. Why does fs.readFile() not block the rest of the program, while fs.readFileSync() does?
+
+fs.readFile() is asynchronous, so Node.js starts reading the file and continues executing the next lines of the program. The file content is returned later through the callback when the reading is completed. This is why the console.log outside the callback appeared before the file content in Task 2. On the other hand, fs.readFileSync() waits until the file has been completely read before executing the next line. Therefore, fs.readFileSync() blocks the execution until the file operation is finished.
+
+
+2. What could go wrong if two people ran add-note.js at the exact same moment?
+
+If two people run add-note.js at the same moment, both programs may try to append data to notes.txt at nearly the same time. This can create a race condition because both operations are accessing the same file concurrently. In some situations, the notes could be written in an unexpected order or a file operation could fail. For a larger application, a proper database or controlled file-writing mechanism would be safer for handling multiple users.

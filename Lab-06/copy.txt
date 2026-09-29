@@ -1,0 +1,2 @@
+Hello, this is my sample file.
+I am learning Node.js File System.
