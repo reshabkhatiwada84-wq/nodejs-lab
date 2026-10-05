@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 06 | Node.js Laboratory</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .lab-container {
+      max-width: 1180px;
+      margin: 40px auto;
+      padding: 30px 24px;
+    }
+    .lab-content-box {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 40px;
+    }
+    .back-btn {
+      display: inline-block;
+      margin-bottom: 25px;
+      color: var(--green);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .back-btn:hover {
+      text-decoration: underline;
+    }
+    h1 {
+      margin-top: 0;
+      font-size: 34px;
+      letter-spacing: -1px;
+    }
+    .desc {
+      color: var(--muted);
+      margin-top: 15px;
+      font-size: 15px;
+      line-height: 1.8;
+    }
+    h2 {
+      margin-top: 45px;
+      margin-bottom: 20px;
+      font-size: 22px;
+      color: var(--text);
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 10px;
+    }
+    .lab-img {
+      max-width: 100%;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      margin-bottom: 20px;
+    }
+    pre {
+      background: rgba(0,0,0,0.4);
+      padding: 20px;
+      border-radius: 12px;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      margin-top: 15px;
+    }
+    code {
+      color: var(--green);
+      font-family: monospace;
+      font-size: 14px;
+    }
+    .code-title {
+      display: inline-block;
+      background: var(--line);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      color: var(--text);
+      font-weight: 700;
+      margin-bottom: -10px;
+      position: relative;
+      z-index: 1;
+    }
+    .code-wrapper {
+      margin-top: 25px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="logo">
+      <span>⬢</span> Node.js Lab Portal
+    </div>
+    <div class="nav-links">
+      <a href="../index.html">← Home</a>
+    </div>
+  </nav>
+
+  <main class="lab-container">
+    <div class="lab-content-box">
+      <a href="../index.html#labs" class="back-btn">← Back to Explore Labs</a>
+      
+      <small>LABORATORY 06</small>
+      <h1>File System & CLI Notes</h1>
+      <p class="desc">File-system operations, synchronous and asynchronous file handling and the command-line Notes App.</p>
+      
+      <h2>Outputs</h2><img src="../Lab-06/notes-app-output.png" class="lab-img" alt="notes-app-output.png output"><img src="../Lab-06/read comparision.png.png" class="lab-img" alt="read comparision.png.png output"><h2>Source Code</h2>
+        <div class="code-wrapper">
+          <div class="code-title">read-sync.js</div>
+          <pre><code>const fs = require('fs');
+
+const data = fs.readFileSync('sample.txt', 'utf8');
+
+console.log(data);
+
+console.log('This line runs AFTER the file has been fully read.');</code></pre>
+        </div>
+      
+        <div class="code-wrapper">
+          <div class="code-title">read-async.js</div>
+          <pre><code>const fs = require('fs');
+
+fs.readFile('sample.txt', 'utf8', (err, data) =&gt; {
+    if (err) {
+        console.error('Error reading file:', err.message);
+        return;
+    }
+
+    console.log(data);
+});
+
+console.log('This line runs BEFORE the file content is printed.');</code></pre>
+        </div>
+      
+        <div class="code-wrapper">
+          <div class="code-title">write-file.js</div>
+          <pre><code>const fs = require('fs');
+
+fs.writeFile('output.txt', 'This is my second message!', (err) =&gt; {
+    if (err) throw err;
+    console.log('File written successfully.');
+});</code></pre>
+        </div>
+      
+        <div class="code-wrapper">
+          <div class="code-title">append-file.js</div>
+          <pre><code>const fs = require('fs');
+
+fs.appendFile('output.txt', '\nThis line was appended.', (err) =&gt; {
+    if (err) throw err;
+    console.log('Content appended successfully.');
+});</code></pre>
+        </div>
+      
+        <div class="code-wrapper">
+          <div class="code-title">delete-file.js</div>
+          <pre><code>const fs = require('fs');
+
+fs.unlink('output.txt', (err) =&gt; {
+    if (err) throw err;
+    console.log('File deleted successfully.');
+});</code></pre>
+        </div>
+      
+        <div class="code-wrapper">
+          <div class="code-title">add-note.js</div>
+          <pre><code>const fs = require('fs');
+
+const note = process.argv[2];
+
+if (!note) {
+    console.log('Please provide a note. Example: node add-note.js "Buy groceries"');
+    process.exit(1);
+}
+
+const entry = `[${new Date().toLocaleString()}] ${note}\n`;
+
+fs.appendFile('notes.txt', entry, (err) =&gt; {
+    if (err) throw err;
+    console.log('Note added!');
+});</code></pre>
+        </div>
+      
+        <div class="code-wrapper">
+          <div class="code-title">read-notes.js</div>
+          <pre><code>const fs = require('fs');
+
+fs.readFile('notes.txt', 'utf8', (err, data) =&gt; {
+    if (err) {
+        console.log('No notes found yet.');
+        return;
+    }
+
+    console.log(data);
+});</code></pre>
+        </div>
+      
+    </div>
+  </main>
+  
+  <footer>
+    <strong>Node.js Laboratory Portal</strong>
+    <span>BCA VII Semester • Rishabh Khatiwada</span>
+  </footer>
+</body>
+</html>

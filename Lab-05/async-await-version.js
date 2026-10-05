@@ -8,7 +8,7 @@ function placeOrder() {
 
             resolve();
 
-        }, 1000);
+        }, 1000); 
 
     });
 

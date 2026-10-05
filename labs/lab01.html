@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 01 | Node.js Laboratory</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .lab-container {
+      max-width: 1180px;
+      margin: 40px auto;
+      padding: 30px 24px;
+    }
+    .lab-content-box {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 40px;
+    }
+    .back-btn {
+      display: inline-block;
+      margin-bottom: 25px;
+      color: var(--green);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .back-btn:hover {
+      text-decoration: underline;
+    }
+    h1 {
+      margin-top: 0;
+      font-size: 34px;
+      letter-spacing: -1px;
+    }
+    .desc {
+      color: var(--muted);
+      margin-top: 15px;
+      font-size: 15px;
+      line-height: 1.8;
+    }
+    h2 {
+      margin-top: 45px;
+      margin-bottom: 20px;
+      font-size: 22px;
+      color: var(--text);
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 10px;
+    }
+    .lab-img {
+      max-width: 100%;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      margin-bottom: 20px;
+    }
+    pre {
+      background: rgba(0,0,0,0.4);
+      padding: 20px;
+      border-radius: 12px;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      margin-top: 15px;
+    }
+    code {
+      color: var(--green);
+      font-family: monospace;
+      font-size: 14px;
+    }
+    .code-title {
+      display: inline-block;
+      background: var(--line);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      color: var(--text);
+      font-weight: 700;
+      margin-bottom: -10px;
+      position: relative;
+      z-index: 1;
+    }
+    .code-wrapper {
+      margin-top: 25px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="logo">
+      <span>⬢</span> Node.js Lab Portal
+    </div>
+    <div class="nav-links">
+      <a href="../index.html">← Home</a>
+    </div>
+  </nav>
+
+  <main class="lab-container">
+    <div class="lab-content-box">
+      <a href="../index.html#labs" class="back-btn">← Back to Explore Labs</a>
+      
+      <small>LABORATORY 01</small>
+      <h1>Node.js Basics</h1>
+      <p class="desc">Introduction to Node.js, npm, first program, console, variables, data types and basic concepts.</p>
+      
+      <h2>Outputs</h2><img src="../Lab-01/node-version.png" class="lab-img" alt="node-version.png output"><h2>Source Code</h2>
+        <div class="code-wrapper">
+          <div class="code-title">app.js</div>
+          <pre><code>console.log("Welcome to Node.js");
+
+console.log("Name : Rishabh Khatiwada");
+console.log("Scholar Number : 23145018");
+console.log("Course : BCA");
+console.log("Semester : VII");
+console.log("College : Dev Sanskriti Vishwavidyalaya (DSVV)");
+
+console.log("Hello Node.js");
+console.log("Learning Backend Development");
+console.log("Today's Lab Completed Successfully");
+
+// Variables
+
+const name = "Rishabh Khatiwada";
+const scholarNumber = "23145018";
+const semester = "VII";
+const course = "BCA";
+const college = "Dev Sanskriti Vishwavidyalaya (DSVV)";
+
+console.log("\n------ Variables ------");
+
+console.log("Name :", name);
+console.log("Scholar Number :", scholarNumber);
+console.log("Semester :", semester);
+console.log("Course :", course);
+console.log("College :", college);
+
+
+// =======================
+// Task 7 - Data Types
+// =======================
+
+let student = "Rishabh";
+let age = 21;
+let isStudent = true;
+let city;
+let address = null;
+
+console.log("\n------ Data Types ------");
+
+console.log("student :", typeof student);
+console.log("age :", typeof age);
+console.log("isStudent :", typeof isStudent);
+console.log("city :", typeof city);
+console.log("address :", typeof address);</code></pre>
+        </div>
+      
+    </div>
+  </main>
+  
+  <footer>
+    <strong>Node.js Laboratory Portal</strong>
+    <span>BCA VII Semester • Rishabh Khatiwada</span>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,242 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 02 | Node.js Laboratory</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .lab-container {
+      max-width: 1180px;
+      margin: 40px auto;
+      padding: 30px 24px;
+    }
+    .lab-content-box {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 40px;
+    }
+    .back-btn {
+      display: inline-block;
+      margin-bottom: 25px;
+      color: var(--green);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .back-btn:hover {
+      text-decoration: underline;
+    }
+    h1 {
+      margin-top: 0;
+      font-size: 34px;
+      letter-spacing: -1px;
+    }
+    .desc {
+      color: var(--muted);
+      margin-top: 15px;
+      font-size: 15px;
+      line-height: 1.8;
+    }
+    h2 {
+      margin-top: 45px;
+      margin-bottom: 20px;
+      font-size: 22px;
+      color: var(--text);
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 10px;
+    }
+    .lab-img {
+      max-width: 100%;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      margin-bottom: 20px;
+    }
+    pre {
+      background: rgba(0,0,0,0.4);
+      padding: 20px;
+      border-radius: 12px;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      margin-top: 15px;
+    }
+    code {
+      color: var(--green);
+      font-family: monospace;
+      font-size: 14px;
+    }
+    .code-title {
+      display: inline-block;
+      background: var(--line);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      color: var(--text);
+      font-weight: 700;
+      margin-bottom: -10px;
+      position: relative;
+      z-index: 1;
+    }
+    .code-wrapper {
+      margin-top: 25px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="logo">
+      <span>⬢</span> Node.js Lab Portal
+    </div>
+    <div class="nav-links">
+      <a href="../index.html">← Home</a>
+    </div>
+  </nav>
+
+  <main class="lab-container">
+    <div class="lab-content-box">
+      <a href="../index.html#labs" class="back-btn">← Back to Explore Labs</a>
+      
+      <small>LABORATORY 02</small>
+      <h1>HTTP Server</h1>
+      <p class="desc">HTTP module, server creation, routing, request and response handling, JSON and 404 responses.</p>
+      
+      <h2>Outputs</h2><img src="../Lab-2/server-running.png" class="lab-img" alt="server-running.png output"><h2>Source Code</h2>
+        <div class="code-wrapper">
+          <div class="code-title">server.js</div>
+          <pre><code>const http = require("http");
+
+const PORT = process.env.PORT || 3000;
+
+const server = http.createServer((req, res) =&gt; {
+
+    console.log("Requested URL:", req.url);
+
+    switch (req.url) {
+
+        // Home Route
+        case "/":
+            res.writeHead(200, { "Content-Type": "text/plain" });
+            res.end(`
+
+      WELCOME TO MY NODE.JS SERVR
+
+Name            : Rishabh Khatiwada
+Scholar Number  : 23145018
+Course          : BCA VII
+Subject         : CS403NOD - Node.js
+Lab Assignment  : 02
+
+Hello!
+Welcome to my first Node.js HTTP Server.
+This server is created using the built-in
+HTTP module of Node.js.
+
+            `);
+            break;
+
+        // About Route
+        case "/about":
+            res.writeHead(200, { "Content-Type": "text/plain" });
+            res.end(`
+           ABOUT ME 
+
+Name : Rishabh Khatiwada
+
+I am a student of
+Dev Sanskriti Vishwavidyalaya,
+currently pursuing BCA VII Semester.
+
+I am learning:
+- Node.js
+
+Thank you for visiting this page.
+            `);
+            break;
+
+        // College Route
+        case "/college":
+            res.writeHead(200, { "Content-Type": "text/plain" });
+            res.end(`
+           COLLEGE DETAILS
+
+College Name :
+Dev Sanskriti Vishwavidyalaya
+
+Department :
+Computer Science
+
+Course :
+Bachelor of Computer Applications (BCA)
+
+Semester :
+VII Semester
+
+Subject :
+CS403NOD - Node.js
+
+Location :
+Haridwar, Uttarakhand
+
+            `);
+            break;
+
+        // Profile Route (JSON)
+        case "/profile":
+
+            const profile = {
+                name: "Rishabh Khatiwada",
+                scholarNumber: "23145018",
+                course: "BCA VII",
+                semester: "7th",
+                college: "Dev Sanskriti Vishwavidyalaya",
+                department: "Computer Science",
+                subject: "CS403NOD - Node.js",
+                
+            };
+
+            res.writeHead(200, {
+                "Content-Type": "application/json"
+            });
+
+            res.end(JSON.stringify(profile, null, 4));
+
+            break;
+
+        // 404 Route
+        default:
+
+            res.writeHead(404, {
+                "Content-Type": "text/plain"
+            });
+
+            res.end(`
+404 - PAGE NOT FOUND
+
+Sorry!
+The page you are looking for
+does not exist.
+
+Please check the URL and try again.
+            `);
+
+            break;
+    }
+
+});
+
+server.listen(PORT, () =&gt; {
+    console.log(`Server Running On http://localhost:${PORT}`);
+});</code></pre>
+        </div>
+      
+    </div>
+  </main>
+  
+  <footer>
+    <strong>Node.js Laboratory Portal</strong>
+    <span>BCA VII Semester • Rishabh Khatiwada</span>
+  </footer>
+</body>
+</html>

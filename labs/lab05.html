@@ -1,0 +1,445 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 05 | Node.js Laboratory</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .lab-container {
+      max-width: 1180px;
+      margin: 40px auto;
+      padding: 30px 24px;
+    }
+    .lab-content-box {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 40px;
+    }
+    .back-btn {
+      display: inline-block;
+      margin-bottom: 25px;
+      color: var(--green);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .back-btn:hover {
+      text-decoration: underline;
+    }
+    h1 {
+      margin-top: 0;
+      font-size: 34px;
+      letter-spacing: -1px;
+    }
+    .desc {
+      color: var(--muted);
+      margin-top: 15px;
+      font-size: 15px;
+      line-height: 1.8;
+    }
+    h2 {
+      margin-top: 45px;
+      margin-bottom: 20px;
+      font-size: 22px;
+      color: var(--text);
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 10px;
+    }
+    .lab-img {
+      max-width: 100%;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      margin-bottom: 20px;
+    }
+    pre {
+      background: rgba(0,0,0,0.4);
+      padding: 20px;
+      border-radius: 12px;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      margin-top: 15px;
+    }
+    code {
+      color: var(--green);
+      font-family: monospace;
+      font-size: 14px;
+    }
+    .code-title {
+      display: inline-block;
+      background: var(--line);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      color: var(--text);
+      font-weight: 700;
+      margin-bottom: -10px;
+      position: relative;
+      z-index: 1;
+    }
+    .code-wrapper {
+      margin-top: 25px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="logo">
+      <span>⬢</span> Node.js Lab Portal
+    </div>
+    <div class="nav-links">
+      <a href="../index.html">← Home</a>
+    </div>
+  </nav>
+
+  <main class="lab-container">
+    <div class="lab-content-box">
+      <a href="../index.html#labs" class="back-btn">← Back to Explore Labs</a>
+      
+      <small>LABORATORY 05</small>
+      <h1>Asynchronous Node.js</h1>
+      <p class="desc">Callbacks, Promises, Promise chaining, async/await, Promise.all() and Event Loop.</p>
+      
+      <h2>Source Code</h2>
+        <div class="code-wrapper">
+          <div class="code-title">callback-version.js</div>
+          <pre><code>function placeOrderCallback(item, callback) {
+
+    console.log(`Order placed: ${item}`); //Order place - Pizza 
+
+    setTimeout(() =&gt; {
+
+        callback();
+
+    }, 2000);
+}
+
+
+function trackOrderCallback(item, callback) {
+
+    console.log(`Tracking order: ${item}`); //Track order - Pizza 
+
+    setTimeout(() =&gt; {
+
+        callback();
+
+    }, 2000);
+}
+
+
+function confirmDeliveryCallback(item, callback) {
+
+    console.log(`Delivery confirmed: ${item}`); // Delevery confirmed - Pizza 
+
+    setTimeout(() =&gt; {
+
+        callback();
+
+    }, 2000);
+}
+
+
+// Callback Nesting
+
+placeOrderCallback("Pizza", () =&gt; {
+
+    trackOrderCallback("Pizza", () =&gt; {
+
+        confirmDeliveryCallback("Pizza", () =&gt; {
+
+            console.log("Order completed successfully!");
+
+        });
+
+    });
+
+});</code></pre>
+        </div>
+      
+        <div class="code-wrapper">
+          <div class="code-title">promise-version.js</div>
+          <pre><code>function placeOrder(item) { 
+
+    return new Promise((resolve, reject) =&gt; {
+
+        console.log(`Order placed: ${item}`); 
+
+        setTimeout(() =&gt; {
+
+            const success = Math.random() &gt; 0.2; //randome no. to track delivery success or fail
+
+            if (success) {
+
+                resolve(`${item} is out for delivery!`);
+
+            } else {
+
+                reject(`Sorry, the restaurant could not prepare ${item}`);
+
+            }
+
+        }, 2000); //2 second 
+
+    });
+}
+
+
+placeOrder("Pizza")
+
+    .then((message) =&gt; {
+
+        console.log(message);
+
+    })
+
+    .catch((error) =&gt; {
+
+        console.log(error);
+
+    });</code></pre>
+        </div>
+      
+        <div class="code-wrapper">
+          <div class="code-title">chaining-version.js</div>
+          <pre><code>function placeOrder() {
+
+    return new Promise((resolve) =&gt; {
+
+        setTimeout(() =&gt; {
+
+            console.log("Order Placed");
+
+            resolve();
+
+        }, 1000);
+
+    });
+
+}
+
+
+function prepareOrder() {
+
+    return new Promise((resolve) =&gt; {
+
+        setTimeout(() =&gt; {
+
+            console.log("Preparing Food");
+
+            resolve();
+
+        }, 1000);
+
+    });
+
+}
+
+
+function outForDelivery() {
+
+    return new Promise((resolve) =&gt; {
+
+        setTimeout(() =&gt; {
+
+            console.log("Out For Delivery");
+
+            resolve();
+
+        }, 1000);
+
+    });
+
+}
+
+
+function delivered() {
+
+    return new Promise((resolve) =&gt; {
+
+        setTimeout(() =&gt; {
+
+            console.log("Delivered");
+
+            resolve();
+
+        }, 1000);
+
+    });
+
+}
+
+placeOrder()
+
+    .then(() =&gt; prepareOrder())
+
+    .then(() =&gt; outForDelivery())
+
+    .then(() =&gt; delivered())
+
+    .then(() =&gt; {
+
+        console.log("Order Completed Successfully!");
+
+    })
+
+    .catch((error) =&gt; {
+
+        console.log(error);
+
+    });</code></pre>
+        </div>
+      
+        <div class="code-wrapper">
+          <div class="code-title">async-await-version.js</div>
+          <pre><code>function placeOrder() {
+
+    return new Promise((resolve) =&gt; {
+
+        setTimeout(() =&gt; {
+
+            console.log("Order Placed");
+
+            resolve();
+
+        }, 1000); 
+
+    });
+
+}
+
+
+function prepareOrder() {
+
+    return new Promise((resolve) =&gt; {
+
+        setTimeout(() =&gt; {
+
+            console.log("Preparing Food");
+
+            resolve();
+
+        }, 1000);
+
+    });
+
+}
+
+
+function outForDelivery() {
+
+    return new Promise((resolve) =&gt; {
+
+        setTimeout(() =&gt; {
+
+            console.log("Out For Delivery");
+
+            resolve();
+
+        }, 1000);
+
+    });
+
+}
+
+
+function delivered() {
+
+    return new Promise((resolve) =&gt; {
+
+        setTimeout(() =&gt; {
+
+            console.log("Delivered");
+
+            resolve();
+
+        }, 1000);
+
+    });
+
+}
+
+
+// Async/Await
+
+async function processOrder() {
+
+    try {
+
+        await placeOrder();
+
+        await prepareOrder();
+
+        await outForDelivery();
+
+        await delivered();
+
+        console.log("Order Completed Successfully!");
+
+    } catch (error) {
+
+        console.log(error);
+
+    }
+
+}
+
+
+processOrder();</code></pre>
+        </div>
+      
+        <div class="code-wrapper">
+          <div class="code-title">concurrent-orders.js</div>
+          <pre><code>function processOrder(item) {
+
+    return new Promise((resolve) =&gt; {
+
+        setTimeout(() =&gt; {
+
+            console.log(`${item} completed`);
+
+            resolve(`${item} order completed`);
+
+        }, 2000);
+
+    });
+
+}
+
+
+const startTime = Date.now();
+
+
+Promise.all([
+    processOrder("Pizza"),
+    processOrder("Burger"),
+    processOrder("Coffee")
+])
+
+.then((results) =&gt; {
+
+    console.log(results);
+
+    const endTime = Date.now();
+
+    console.log(`Total Time: ${endTime - startTime} ms`);
+
+})
+
+.catch((error) =&gt; {
+
+    console.log(error);
+
+});</code></pre>
+        </div>
+      
+    </div>
+  </main>
+  
+  <footer>
+    <strong>Node.js Laboratory Portal</strong>
+    <span>BCA VII Semester • Rishabh Khatiwada</span>
+  </footer>
+</body>
+</html>
