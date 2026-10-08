@@ -1,0 +1,30 @@
+LAB 07 - REFLECTION NOTES
+EventEmitter and Event-Driven Programming
+
+
+1. How does EventEmitter connect to the Observer Pattern?
+
+EventEmitter is closely related to the Observer Pattern because an object
+can notify multiple listeners when an event occurs. In Node.js, listeners
+are registered using methods such as on() and once(). When an event is
+emitted, all registered listeners for that event are executed. This allows
+different parts of an application to respond to the same event independently.
+
+
+2. Name one core Node.js API other than EventEmitter that uses the same
+   event-driven pattern and explain.
+
+The Node.js HTTP API uses an event-driven pattern. For example, an HTTP
+server can listen for events such as request and connection. Callback
+functions are executed when these events occur. This follows the same
+basic idea where an event occurs and registered handlers respond to it.
+
+
+3. What did you learn from this lab?
+
+I learned how Node.js EventEmitter works and how custom events can be
+created and handled. I also learned the difference between on() and
+once(), how multiple listeners can respond to the same event, and how
+error events should be handled. The Order Tracking project helped me
+understand how event-driven programming can be used in a real-world
+application.
