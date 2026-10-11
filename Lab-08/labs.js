@@ -16,7 +16,7 @@ module.exports = [
     "title": "HTTP Server",
     "topic": "HTTP Server",
     "type": "server",
-    "folder": "Lab-2",
+    "folder": "Lab-02",
     "files": [
       "server.js"
     ],
@@ -29,7 +29,7 @@ module.exports = [
     "title": "Student Directory",
     "topic": "Student Directory",
     "type": "server",
-    "folder": "Lab-3",
+    "folder": "Lab-03",
     "files": [
       "student-server.js"
     ],
@@ -43,7 +43,7 @@ module.exports = [
     "title": "Advanced Server",
     "topic": "Advanced Server",
     "type": "server",
-    "folder": "Lab-4",
+    "folder": "Lab-04",
     "files": [
       "advanced-server.js"
     ],

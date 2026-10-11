@@ -8,9 +8,9 @@ const screenshotsDir = path.join(__dirname, 'public', 'screenshots');
 
 const labFolders = [
     { id: '01', folder: 'Lab-01', title: 'Node.js Basics', type: 'script' },
-    { id: '02', folder: 'Lab-2', title: 'HTTP Server', type: 'server' },
-    { id: '03', folder: 'Lab-3', title: 'Student Directory', type: 'server' },
-    { id: '04', folder: 'Lab-4', title: 'Advanced Server', type: 'server' },
+   { id: '02', folder: 'Lab-02', title: 'HTTP Server', type: 'server' },
+{ id: '03', folder: 'Lab-03', title: 'Student Directory', type: 'server' },
+{ id: '04', folder: 'Lab-04', title: 'Advanced Server', type: 'server' },
     { id: '05', folder: 'Lab-05', title: 'Asynchronous Node.js', type: 'script' },
     { id: '06', folder: 'Lab-06', title: 'File System & CLI Notes', type: 'script' },
     { id: '07', folder: 'Lab-07', title: 'EventEmitter', type: 'script' }
