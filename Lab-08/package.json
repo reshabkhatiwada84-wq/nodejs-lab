@@ -1,0 +1,13 @@
+{
+  "name": "lab-08-integrated-server",
+  "version": "1.0.0",
+  "description": "Integrated Node.js Lab Server",
+  "main": "server.js",
+  "scripts": {
+    "build": "node build-labs.js",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "slugify": "^1.6.9"
+  }
+}
