@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 07 | Lab 07 – EventEmitter and Event-Driven Programming</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .lab-container { max-width:1180px; margin:40px auto; padding:30px 24px; }
+    .lab-content-box { background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:40px; }
+    .back-btn { display:inline-block; margin-bottom:25px; color:var(--green); text-decoration:none; font-weight:700; }
+    .desc { color:var(--muted); line-height:1.8; }
+    h2 { margin-top:40px; border-bottom:1px solid var(--line); padding-bottom:10px; }
+    .lab-img { max-width:100%; border-radius:12px; border:1px solid var(--line); margin:10px 0 20px; }
+    pre { background:rgba(0,0,0,.4); padding:20px; border-radius:12px; overflow-x:auto; }
+    code { color:var(--green); font-family:monospace; font-size:14px; }
+    .code-title { display:inline-block; margin-top:20px; font-weight:bold; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="logo"><span>⬢</span> Node.js Lab Portal</div>
+    <div class="nav-links"><a href="../index.html">← Home</a></div>
+  </nav>
+  <main class="lab-container">
+    <div class="lab-content-box">
+      <a href="../index.html#labs" class="back-btn">← Back to Explore Labs</a>
+      <small>LABORATORY 07</small>
+      <h1>Lab 07 – EventEmitter and Event-Driven Programming</h1>
+      <p class="desc">Task 1 : What happened and why? When emit() was written before on(), nothing was printed. Why? Because the greet event was triggered when no listener was registered yet. Node.js EventEmitter does not save that event and replay it later when a listener is added.</p>
+      <h2>Outputs and Screenshots</h2>
+        <figure>
+          <img class="lab-img"
+               src="../Lab-07/error%20handling%201.png"
+               alt="error handling 1.png"
+               loading="lazy">
+          <figcaption>error handling 1.png</figcaption>
+        </figure>
+        <figure>
+          <img class="lab-img"
+               src="../Lab-07/errorhandling%20after%20listining.png"
+               alt="errorhandling after listining.png"
+               loading="lazy">
+          <figcaption>errorhandling after listining.png</figcaption>
+        </figure>
+        <figure>
+          <img class="lab-img"
+               src="../Lab-07/notification-center.js%20output.png"
+               alt="notification-center.js output.png"
+               loading="lazy">
+          <figcaption>notification-center.js output.png</figcaption>
+        </figure>
+        <figure>
+          <img class="lab-img"
+               src="../Lab-07/order-tracker-output.png"
+               alt="order-tracker-output.png"
+               loading="lazy">
+          <figcaption>order-tracker-output.png</figcaption>
+        </figure><h2>Source Code</h2>
+        <div class="code-wrapper">
+          <div class="code-title">error-handling.js</div>
+          <pre><code>const EventEmitter = require(&#39;events&#39;);
+
+const risky = new EventEmitter();
+
+risky.on(&#39;error&#39;, (err) =&gt; {
+    console.log(`Handled gracefully: ${err.message}`);
+});
+
+risky.emit(&#39;error&#39;, new Error(&#39;Something broke&#39;));</code></pre>
+        </div>
+        <div class="code-wrapper">
+          <div class="code-title">events-basic.js</div>
+          <pre><code>const EventEmitter = require(&#39;events&#39;);
+
+const emitter = new EventEmitter();
+
+emitter.on(&#39;greet&#39;, (name) =&gt; {
+    console.log(`Hello, ${name}!`);
+});
+
+emitter.emit(&#39;greet&#39;, &#39;Class&#39;);</code></pre>
+        </div>
+        <div class="code-wrapper">
+          <div class="code-title">notification-center.js</div>
+          <pre><code>const EventEmitter = require(&#39;events&#39;);
+
+class NotificationCenter extends EventEmitter {}
+
+const notifier = new NotificationCenter();
+
+notifier.on(&#39;newMessage&#39;, (from, text) =&gt; {
+    console.log(`Message from ${from}: ${text}`);
+});
+
+notifier.on(&#39;error&#39;, (err) =&gt; {
+    console.log(`Handled: ${err.message}`);
+});
+
+notifier.emit(&#39;newMessage&#39;, &#39;Priya&#39;, &#39;Are You free?&#39;);
+
+notifier.on(&#39;userOnline&#39;, (user) =&gt; {
+    console.log(`${user} is now online.`);
+});
+
+notifier.emit(&#39;userOnline&#39;, &#39;Aman&#39;);</code></pre>
+        </div>
+        <div class="code-wrapper">
+          <div class="code-title">once-vs-on.js</div>
+          <pre><code>const EventEmitter = require(&#39;events&#39;);
+
+const app = new EventEmitter();
+
+app.once(&#39;firstLogin&#39;, (user) =&gt; {
+    console.log(`Welcome bonus applied for ${user}!`);
+});
+
+app.on(&#39;login&#39;, (user) =&gt; {
+    console.log(`${user} logged in.`);
+});
+
+app.emit(&#39;firstLogin&#39;, &#39;Aman&#39;);
+app.emit(&#39;login&#39;, &#39;Aman&#39;);
+
+app.emit(&#39;firstLogin&#39;, &#39;Aman&#39;);
+app.emit(&#39;login&#39;, &#39;Aman&#39;);</code></pre>
+        </div>
+        <div class="code-wrapper">
+          <div class="code-title">order-system.js</div>
+          <pre><code>const EventEmitter = require(&#39;events&#39;);
+
+const orders = new EventEmitter();
+
+orders.on(&#39;placed&#39;, (item) =&gt; {
+    console.log(`Kitchen: prepare ${item}`);
+});
+
+orders.on(&#39;placed&#39;, (item) =&gt; {
+    console.log(`Billing: charge for ${item}`);
+});
+
+orders.on(&#39;placed&#39;, (item) =&gt; {
+    console.log(&#39;SMS: order confirmed&#39;);
+});
+
+orders.on(&#39;placed&#39;, (item) =&gt; {
+    console.log(`Loyalty Points: added for ${item}`);
+});
+
+orders.emit(&#39;placed&#39;, &#39;Pizza&#39;);</code></pre>
+        </div>
+        <div class="code-wrapper">
+          <div class="code-title">order-tracker.js</div>
+          <pre><code>const EventEmitter = require(&#39;events&#39;);
+
+class OrderTracker extends EventEmitter {
+    placeOrder(order) {
+        this.emit(&#39;orderPlaced&#39;, order);
+
+        setTimeout(() =&gt; {
+            this.emit(&#39;orderPrepared&#39;, order);
+        }, 1000);
+
+        setTimeout(() =&gt; {
+            this.emit(&#39;orderDelivered&#39;, order);
+        }, 2000);
+    }
+}
+
+const tracker = new OrderTracker();
+
+// orderPlaced - 2 listeners
+tracker.on(&#39;orderPlaced&#39;, (order) =&gt; {
+    console.log(`Customer: Order ${order} placed successfully.`);
+});
+
+tracker.on(&#39;orderPlaced&#39;, (order) =&gt; {
+    console.log(`Restaurant: Received order ${order}.`);
+});
+
+// orderPrepared - 2 listeners
+tracker.on(&#39;orderPrepared&#39;, (order) =&gt; {
+    console.log(`Kitchen: Order ${order} is prepared.`);
+});
+
+tracker.on(&#39;orderPrepared&#39;, (order) =&gt; {
+    console.log(`Delivery Partner: Pickup order ${order}.`);
+});
+
+// orderDelivered - 2 listeners
+tracker.on(&#39;orderDelivered&#39;, (order) =&gt; {
+    console.log(`Customer: Order ${order} delivered.`);
+});
+
+tracker.on(&#39;orderDelivered&#39;, (order) =&gt; {
+    console.log(`System: Order ${order} completed.`);
+});
+
+// once() listener
+tracker.once(&#39;firstOrderBonus&#39;, (order) =&gt; {
+    console.log(`Bonus: First order bonus applied to ${order}.`);
+});
+
+// error listener
+tracker.on(&#39;error&#39;, (err) =&gt; {
+    console.log(`Order Error: ${err.message}`);
+});
+
+// Start order tracking
+tracker.emit(&#39;firstOrderBonus&#39;, &#39;ORD001&#39;);
+tracker.placeOrder(&#39;ORD001&#39;);</code></pre>
+        </div>
+    </div>
+  </main>
+  <footer>
+    <strong>Node.js Laboratory Portal</strong>
+    <span>BCA VII Semester • Rishabh Khatiwada</span>
+  </footer>
+</body>
+</html>
