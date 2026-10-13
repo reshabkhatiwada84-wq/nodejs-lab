@@ -3,11 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": { 
-  "dev": "vite",
-  "test": "echo \"Error: no test specified\" && exit 1"
-}
-  ,
+  "scripts": {
+    "start": "node server.js",
+    "server": "node server.js",
+    "generate": "node generate-labs.js",
+    "dev": "node server.js",
+    "vite": "vite"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/reshabkhatiwada84-wq/nodejs-lab.git"

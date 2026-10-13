@@ -4,34 +4,156 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lab 08 | Lab 08 – Integrated Node.js Lab Server</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
-  <style>
-    .lab-container { max-width:1180px; margin:40px auto; padding:30px 24px; }
-    .lab-content-box { background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:40px; }
-    .back-btn { display:inline-block; margin-bottom:25px; color:var(--green); text-decoration:none; font-weight:700; }
-    .desc { color:var(--muted); line-height:1.8; }
-    h2 { margin-top:40px; border-bottom:1px solid var(--line); padding-bottom:10px; }
-    .lab-img { max-width:100%; border-radius:12px; border:1px solid var(--line); margin:10px 0 20px; }
-    pre { background:rgba(0,0,0,.4); padding:20px; border-radius:12px; overflow-x:auto; }
-    code { color:var(--green); font-family:monospace; font-size:14px; }
-    .code-title { display:inline-block; margin-top:20px; font-weight:bold; }
-  </style>
 </head>
 <body>
+
+  <!-- ================= TOP NAVIGATION ================= -->
   <nav class="nav">
-    <div class="logo"><span>⬢</span> Node.js Lab Portal</div>
-    <div class="nav-links"><a href="../index.html">← Home</a></div>
+    <a href="../index.html" class="logo">
+      <span>⬢</span> Node.js Lab Portal
+    </a>
+    <div class="nav-links">
+      <a href="../index.html">← Back to Portal</a>
+      <a href="../index.html#labs">All Labs</a>
+      <a href="https://github.com/reshabkhatiwada84-wq/nodejs-lab" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+    </div>
   </nav>
+
   <main class="lab-container">
-    <div class="lab-content-box">
+
+    <!-- ================= LAB HEADER ================= -->
+    <div class="lab-header-card">
       <a href="../index.html#labs" class="back-btn">← Back to Explore Labs</a>
-      <small>LABORATORY 08</small>
-      <h1>Lab 08 – Integrated Node.js Lab Server</h1>
-      <p class="desc">Lab 08 is an integrated Node.js web server project that brings together the practical work completed in Labs 01 to 07. It provides a single web portal where users can explore lab details, view JavaScript source code, execute scripts, access server-based applications, and view screenshots of lab outputs.</p>
-      <h2>Source Code</h2>
-        <div class="code-wrapper">
-          <div class="code-title">build-labs.js</div>
-          <pre><code>
+      <div style="display:flex; align-items:center; gap:10px; margin-top:10px;">
+        <span class="badge">
+          <span class="badge-dot"></span>
+          LABORATORY 08
+        </span>
+        <span class="card-tag server">🌐 HTTP SERVER LAB</span>
+      </div>
+      <h1>🚀 Lab 08 – Integrated Node.js Lab Server</h1>
+      <p class="desc">A unified portal bringing previous Node.js practical labs together with live execution.</p>
+    </div>
+
+    <!-- ================= TABS NAVIGATION ================= -->
+    <div class="tabs-nav">
+      <button class="tab-btn active" onclick="switchTab('tab-runner')">
+        <span>💻</span> Code & Interactive Runner
+      </button>
+      <button class="tab-btn" onclick="switchTab('tab-screenshots')">
+        <span>🖼</span> Screenshots & Outputs (0)
+      </button>
+      
+      <button class="tab-btn" onclick="switchTab('tab-readme')">
+        <span>📖</span> Lab Documentation
+      </button>
+    </div>
+
+    <!-- ================= TAB 1: RUNNER & SOURCE CODE ================= -->
+    <div id="tab-runner" class="tab-panel active">
+
+      <!-- INTERACTIVE TERMINAL -->
+      <div class="terminal-box">
+        <div class="terminal-header">
+          <div class="terminal-dots">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+          </div>
+
+          <div class="terminal-title">
+            <span>bash</span> — <strong id="active-filename-display">build-labs.js</strong>
+          </div>
+
+          <div class="terminal-actions">
+            
+            <div class="file-select-wrap">
+              <label for="codeFileSelect" style="font-size:11px; color:var(--muted); font-family:var(--font-mono);">File:</label>
+              <select id="codeFileSelect" class="file-select" onchange="onFileChange(this.value)">
+                
+    <option value="build-labs.js" selected>build-labs.js</option>
+  
+    <option value="labs.js" >labs.js</option>
+  
+    <option value="server.js" >server.js</option>
+  
+              </select>
+            </div>
+
+            <button class="run-btn" id="runCodeBtn" onclick="runCurrentCode()">
+              <span id="run-icon">▶</span>
+              <span id="run-text">Run Code</span>
+            </button>
+            <button class="clear-btn" onclick="clearTerminal()">Clear</button>
+          </div>
+        </div>
+
+        <div class="terminal-body" id="terminal-body">
+          <div class="terminal-output" id="terminal-output"><span class="log-dim">// Click "▶ Run Code" above to execute this script in real time.
+// Output, timestamps, and console logs will appear here.</span></div>
+        </div>
+
+        <div class="terminal-status-bar">
+          <div class="status-pill">
+            <span class="status-indicator ready" id="status-indicator"></span>
+            <span id="status-text">Ready</span>
+          </div>
+          <span id="execution-time-text">Time: 0ms</span>
+        </div>
+      </div>
+
+      
+      <div class="route-tester-box">
+        <h3><span>🌐</span> Interactive Server & API Route Explorer</h3>
+        <p style="color:var(--muted); font-size:13.5px; margin-bottom:16px;">
+          Test simulated HTTP endpoints for this server lab. Click any route below to view live server response:
+        </p>
+        <div class="route-chips">
+          
+            <button class="route-chip" onclick="testRoute('08', '/health')">
+              <span class="method">GET</span>
+              <span>/health</span>
+            </button>
+          
+            <button class="route-chip" onclick="testRoute('08', '/about')">
+              <span class="method">GET</span>
+              <span>/about</span>
+            </button>
+          
+            <button class="route-chip" onclick="testRoute('08', '/labs')">
+              <span class="method">GET</span>
+              <span>/labs</span>
+            </button>
+          
+            <button class="route-chip" onclick="testRoute('08', '/api/dashboard')">
+              <span class="method">GET</span>
+              <span>/api/dashboard</span>
+            </button>
+          
+        </div>
+        <div class="response-card">
+          <div class="response-header">
+            <span id="res-route-indicator">Ready to test route</span>
+            <span id="res-status-badge" class="status-badge status-200" style="display:none;">200 OK</span>
+          </div>
+          <pre class="response-body" id="res-output">// Click a route above to execute HTTP request</pre>
+        </div>
+      </div>
+
+      <!-- SOURCE CODE VIEWER -->
+      <div class="code-wrapper">
+        <div class="code-top-bar">
+          <span class="code-title">
+            <span>📄</span>
+            <span id="code-viewer-title">build-labs.js</span>
+          </span>
+          <button class="copy-btn" id="copyCodeBtn" onclick="copyCurrentCode()">📋 Copy Code</button>
+        </div>
+        <pre><code id="source-code-display">
 const fs = require(&#39;fs&#39;);
 const path = require(&#39;path&#39;);
 
@@ -100,524 +222,552 @@ labs.forEach(lab =&gt; {
 
 console.log(`\nOutput: ${outputFile}`);
 </code></pre>
-        </div>
-        <div class="code-wrapper">
-          <div class="code-title">labs.js</div>
-          <pre><code>// Automatically generated by build-labs.js
-module.exports = [
-  {
-    &quot;id&quot;: &quot;01&quot;,
-    &quot;title&quot;: &quot;Node.js Basics&quot;,
-    &quot;topic&quot;: &quot;Node.js Basics&quot;,
-    &quot;type&quot;: &quot;script&quot;,
-    &quot;folder&quot;: &quot;Lab-01&quot;,
-    &quot;files&quot;: [
-      &quot;app.js&quot;
-    ],
-    &quot;screenshots&quot;: []
-  },
-  {
-    &quot;id&quot;: &quot;02&quot;,
-    &quot;title&quot;: &quot;HTTP Server&quot;,
-    &quot;topic&quot;: &quot;HTTP Server&quot;,
-    &quot;type&quot;: &quot;server&quot;,
-    &quot;folder&quot;: &quot;Lab-02&quot;,
-    &quot;files&quot;: [
-      &quot;server.js&quot;
-    ],
-    &quot;screenshots&quot;: [
-      &quot;Lab-2-server-running.png&quot;
-    ]
-  },
-  {
-    &quot;id&quot;: &quot;03&quot;,
-    &quot;title&quot;: &quot;Student Directory&quot;,
-    &quot;topic&quot;: &quot;Student Directory&quot;,
-    &quot;type&quot;: &quot;server&quot;,
-    &quot;folder&quot;: &quot;Lab-03&quot;,
-    &quot;files&quot;: [
-      &quot;student-server.js&quot;
-    ],
-    &quot;screenshots&quot;: [
-      &quot;Lab-3-student-server-output-1.png&quot;,
-      &quot;Lab-3-student-server-output.png&quot;
-    ]
-  },
-  {
-    &quot;id&quot;: &quot;04&quot;,
-    &quot;title&quot;: &quot;Advanced Server&quot;,
-    &quot;topic&quot;: &quot;Advanced Server&quot;,
-    &quot;type&quot;: &quot;server&quot;,
-    &quot;folder&quot;: &quot;Lab-04&quot;,
-    &quot;files&quot;: [
-      &quot;advanced-server.js&quot;
-    ],
-    &quot;screenshots&quot;: [
-      &quot;Lab-4-advance.output-2.png&quot;,
-      &quot;Lab-4-advance.output-student.png&quot;,
-      &quot;Lab-4-advanced-output.png&quot;
-    ]
-  },
-  {
-    &quot;id&quot;: &quot;05&quot;,
-    &quot;title&quot;: &quot;Asynchronous Node.js&quot;,
-    &quot;topic&quot;: &quot;Asynchronous Node.js&quot;,
-    &quot;type&quot;: &quot;script&quot;,
-    &quot;folder&quot;: &quot;Lab-05&quot;,
-    &quot;files&quot;: [
-      &quot;async-await-version.js&quot;,
-      &quot;callback-version.js&quot;,
-      &quot;chaining-version.js&quot;,
-      &quot;concurrent-orders.js&quot;,
-      &quot;promise-version.js&quot;
-    ],
-    &quot;screenshots&quot;: []
-  },
-  {
-    &quot;id&quot;: &quot;06&quot;,
-    &quot;title&quot;: &quot;File System &amp; CLI Notes&quot;,
-    &quot;topic&quot;: &quot;File System &amp; CLI Notes&quot;,
-    &quot;type&quot;: &quot;script&quot;,
-    &quot;folder&quot;: &quot;Lab-06&quot;,
-    &quot;files&quot;: [
-      &quot;add-note.js&quot;,
-      &quot;append-file.js&quot;,
-      &quot;async-await-version.js&quot;,
-      &quot;delete-file.js&quot;,
-      &quot;read-async.js&quot;,
-      &quot;read-notes.js&quot;,
-      &quot;read-sync.js&quot;,
-      &quot;write-file.js&quot;
-    ],
-    &quot;screenshots&quot;: []
-  },
-  {
-    &quot;id&quot;: &quot;07&quot;,
-    &quot;title&quot;: &quot;EventEmitter&quot;,
-    &quot;topic&quot;: &quot;EventEmitter&quot;,
-    &quot;type&quot;: &quot;script&quot;,
-    &quot;folder&quot;: &quot;Lab-07&quot;,
-    &quot;files&quot;: [
-      &quot;error-handling.js&quot;,
-      &quot;events-basic.js&quot;,
-      &quot;notification-center.js&quot;,
-      &quot;once-vs-on.js&quot;,
-      &quot;order-system.js&quot;,
-      &quot;order-tracker.js&quot;
-    ],
-    &quot;screenshots&quot;: []
-  }
-];
-</code></pre>
-        </div>
-        <div class="code-wrapper">
-          <div class="code-title">server.js</div>
-          <pre><code>const { logger } = require(&#39;./modules/logger&#39;);
-const http = require(&#39;http&#39;);
-const fs = require(&#39;fs&#39;);
-const path = require(&#39;path&#39;);
-const { execFile } = require(&#39;child_process&#39;);
-const slugify = require(&#39;slugify&#39;);
-const labs = require(&#39;./labs&#39;);
+      </div>
 
-const ROOT_DIR = path.resolve(__dirname, &#39;..&#39;);
-const PORT = process.env.PORT || 3000;
-
-function send(res, status, data, contentType = &#39;application/json&#39;) {
-    res.writeHead(status, { &#39;Content-Type&#39;: `${contentType}; charset=utf-8` });
-    res.end(
-        contentType.includes(&#39;application/json&#39;)
-            ? JSON.stringify(data, null, 2)
-            : data
-    );
-}
-
-function escapeHTML(value) {
-    return String(value)
-        .replace(/&amp;/g, &#39;&amp;amp;&#39;)
-        .replace(/&lt;/g, &#39;&amp;lt;&#39;)
-        .replace(/&gt;/g, &#39;&amp;gt;&#39;)
-        .replace(/&quot;/g, &#39;&amp;quot;&#39;)
-        .replace(/&#39;/g, &#39;&amp;#39;&#39;);
-}
-
-function findLab(id) {
-    return labs.find(lab =&gt; lab.id === id);
-}
-
-function getLabFile(lab, filename) {
-    if (!lab.files.includes(filename) || path.basename(filename) !== filename) {
-        return null;
-    }
-
-    const fullPath = path.resolve(ROOT_DIR, lab.folder, filename);
-    const labPath = path.resolve(ROOT_DIR, lab.folder) + path.sep;
-
-    return fullPath.startsWith(labPath) &amp;&amp; fs.existsSync(fullPath)
-        ? fullPath
-        : null;
-}
-
-// Lab-02 route handling
-function handleLab02(pathname, res) {
-    if (pathname === &#39;/&#39; || pathname === &#39;/about&#39; ||
-        pathname === &#39;/college&#39; || pathname === &#39;/profile&#39;) {
-
-        if (pathname === &#39;/&#39;) {
-            return send(res, 200, &#39;Welcome to my Node.js HTTP Server\nName: Rishabh Khatiwada\nLab Assignment: 02&#39;, &#39;text/plain&#39;);
-        }
-
-        if (pathname === &#39;/about&#39;) {
-            return send(res, 200, &#39;About: BCA VII Semester, Dev Sanskriti Vishwavidyalaya.&#39;, &#39;text/plain&#39;);
-        }
-
-        if (pathname === &#39;/college&#39;) {
-            return send(res, 200, &#39;Dev Sanskriti Vishwavidyalaya - Computer Science - BCA VII Semester&#39;, &#39;text/plain&#39;);
-        }
-
-        return send(res, 200, {
-            name: &#39;Rishabh Khatiwada&#39;,
-            scholarNumber: &#39;23145018&#39;,
-            course: &#39;BCA VII&#39;,
-            semester: &#39;7th&#39;,
-            college: &#39;Dev Sanskriti Vishwavidyalaya&#39;,
-            subject: &#39;CS403NOD - Node.js&#39;
-        });
-    }
-
-    return send(res, 404, { error: &#39;Lab-02 route not found&#39;, path: pathname });
-}
-
-// Lab-03 student data and routes
-const students = [
-    { id: 23145001, name: &#39;Aditya Soni&#39;, course: &#39;BCA&#39; },
-    { id: 23145002, name: &#39;Bhaskar Mall&#39;, course: &#39;BCA&#39; },
-    { id: 23145003, name: &#39;Ayush Ram Tripathi&#39;, course: &#39;BCA&#39; },
-    { id: 23145004, name: &#39;Yadev Singh Nishad&#39;, course: &#39;BCA&#39; },
-    { id: 23145005, name: &#39;Sayon Koley&#39;, course: &#39;BCA&#39; },
-    { id: 23145006, name: &#39;Rishabh Khatiwada&#39;, course: &#39;BCA&#39; },
-    { id: 23145007, name: &#39;Gauri&#39;, course: &#39;BCA&#39; },
-    { id: 23145008, name: &#39;Kanak Sharma&#39;, course: &#39;BCA&#39; },
-    { id: 23145009, name: &#39;Pragya Gupta&#39;, course: &#39;BCA&#39; },
-    { id: 23145010, name: &#39;Shreya Singh&#39;, course: &#39;BCA&#39; },
-    { id: 23145011, name: &#39;Shreya Kashyap&#39;, course: &#39;BCA&#39; },
-    { id: 23145012, name: &#39;Mikki&#39;, course: &#39;BCA&#39; }
-];
-
-function handleLab03(pathname, res) {
-    if (pathname === &#39;/&#39;) {
-        return send(res, 200, &#39;Welcome to Student Directory Server&#39;, &#39;text/plain&#39;);
-    }
-
-    if (pathname === &#39;/students&#39;) {
-        return send(res, 200, students);
-    }
-
-    const match = pathname.match(/^\/students\/(\d+)$/) ||
-                  pathname.match(/^\/(\d+)$/);
-
-    if (match) {
-        const student = students.find(s =&gt; s.id === Number(match[1]));
-        return student
-            ? send(res, 200, student)
-            : send(res, 404, { error: &#39;Student not found&#39; });
-    }
-
-    if (pathname.startsWith(&#39;/students/&#39;)) {
-        return send(res, 400, { error: &#39;Student ID must be a number&#39; });
-    }
-
-    return send(res, 404, { error: &#39;Route not found&#39; });
-}
-
-// Lab-04 student data and routes
-const advancedStudents = [
-    { id: 1, name: &#39;Aditya Soni&#39;, course: &#39;BCA&#39;, marks: 78 },
-    { id: 2, name: &#39;Bhaskar Mall&#39;, course: &#39;BCA&#39;, marks: 65 },
-    { id: 3, name: &#39;Gaurav Kumar&#39;, course: &#39;BIT&#39;, marks: 82 },
-    { id: 4, name: &#39;Aman Pratap Singh&#39;, course: &#39;BIT&#39;, marks: 55 },
-    { id: 5, name: &#39;Sayon Koley&#39;, course: &#39;BBA&#39;, marks: 71 },
-    { id: 6, name: &#39;Rishabh Khatiwada&#39;, course: &#39;BCA&#39;, marks: 88 },
-    { id: 7, name: &#39;Akansha Rana&#39;, course: &#39;BIT&#39;, marks: 91 },
-    { id: 8, name: &#39;Amit Tiwari&#39;, course: &#39;BIT&#39;, marks: 62 },
-    { id: 9, name: &#39;Ashutosh Sukla&#39;, course: &#39;BBA&#39;, marks: 78 },
-    { id: 10, name: &#39;Rohit Kumar&#39;, course: &#39;BBA&#39;, marks: 84 },
-    { id: 11, name: &#39;Raman Singh&#39;, course: &#39;BBA&#39;, marks: 92 },
-    { id: 12, name: &#39;Sumit Sukla&#39;, course: &#39;BA&#39;, marks: 95 },
-    { id: 13, name: &#39;Ram Mohan&#39;, course: &#39;BA&#39;, marks: 88 }
-];
-
-function handleLab04(pathname, res) {
-    if (pathname === &#39;/&#39;) {
-        return send(res, 200, &#39;Welcome to Advanced Node.js Server&#39;, &#39;text/plain&#39;);
-    }
-
-    if (pathname === &#39;/students&#39;) {
-        return send(res, 200, advancedStudents);
-    }
-
-    if (pathname.startsWith(&#39;/students/marks/&#39;)) {
-        const value = pathname.split(&#39;/&#39;)[3];
-
-        if (value === undefined || value.trim() === &#39;&#39; || !Number.isFinite(Number(value))) {
-            return send(res, 400, { error: &#39;Provide a valid marks threshold&#39; });
-        }
-
-        return send(res, 200,
-            advancedStudents.filter(student =&gt; student.marks &gt; Number(value)));
-    }
-
-    if (pathname.startsWith(&#39;/students/&#39;)) {
-        const course = pathname.split(&#39;/&#39;)[2];
-
-        return send(res, 200, advancedStudents.filter(
-            student =&gt; student.course.toLowerCase() === course.toLowerCase()
-        ));
-    }
-
-    return send(res, 404, { error: &#39;Route not found&#39; });
-}
-
-const server = http.createServer(async (req, res) =&gt; {
-    const requestURL = new URL(req.url, `http://${req.headers.host || &#39;localhost&#39;}`);
-    const pathname = requestURL.pathname;
-
-   logger.emit(&#39;request&#39;, req.method, req.url);
-
-    if (req.method !== &#39;GET&#39;) {
-        return send(res, 405, { error: &#39;Only GET requests are supported&#39; });
-    }
-
-    if (pathname === &#39;/&#39;) {
-        const links = labs.map(lab =&gt;
-            `&lt;li&gt;&lt;a href=&quot;/labs/${lab.id}&quot;&gt;Lab ${lab.id}: ${escapeHTML(lab.title)}&lt;/a&gt;&lt;/li&gt;`
-        ).join(&#39;&#39;);
-
-        return send(res, 200, `&lt;!doctype html&gt;
-&lt;html&gt;
-&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;title&gt;Integrated Node.js Lab Portal&lt;/title&gt;&lt;/head&gt;
-&lt;body style=&quot;font-family:Arial;max-width:850px;margin:40px auto&quot;&gt;
-&lt;h1&gt;Integrated Node.js Lab Portal&lt;/h1&gt;
-&lt;p&gt;Name: Rishabh Khatiwada | Course: BCA VII Semester&lt;/p&gt;
-&lt;p&gt;Environment: ${process.env.RENDER ? &#39;Live (Render)&#39; : &#39;Local&#39;}&lt;/p&gt;
-&lt;h2&gt;Available Labs&lt;/h2&gt;&lt;ul&gt;${links}&lt;/ul&gt;
-&lt;p&gt;&lt;a href=&quot;/labs&quot;&gt;JSON Lab Registry&lt;/a&gt; | &lt;a href=&quot;/health&quot;&gt;Health&lt;/a&gt; | &lt;a href=&quot;/about&quot;&gt;About&lt;/a&gt;&lt;/p&gt;
-&lt;/body&gt;&lt;/html&gt;`, &#39;text/html&#39;);
-    }
-
-    if (pathname === &#39;/health&#39;) {
-        return send(res, 200, {
-            status: &#39;ok&#39;,
-            environment: process.env.RENDER ? &#39;live (Render)&#39; : &#39;local&#39;,
-            uptimeSeconds: Math.floor(process.uptime())
-        });
-    }
-
-    if (pathname === &#39;/about&#39;) {
-        return send(res, 200, {
-            project: &#39;Lab-08 Integrated Node.js Server&#39;,
-            student: process.env.STUDENT_NAME || &#39;Rishabh Khatiwada&#39;,
-            labs: labs.length
-        });
-    }
-
-    if (pathname === &#39;/labs&#39;) {
-        return send(res, 200, labs.map(lab =&gt; ({
-            ...lab,
-            slug: slugify(lab.title, { lower: true, strict: true })
-        })));
-    }
-
-   
-if (pathname === &#39;/api/dashboard&#39;) {
-    const logsDir = path.join(__dirname, &#39;logs&#39;);
-    const screenshotsDir = path.join(__dirname, &#39;public&#39;, &#39;screenshots&#39;);
-    const logFile = path.join(logsDir, &#39;server.log&#39;);
-
-    let requestsLogged = 0;
-    let screenshots = [];
-
-    try {
-        if (fs.existsSync(logFile)) {
-            const logContent = await fs.promises.readFile(logFile, &#39;utf8&#39;);
-
-            requestsLogged = logContent
-                .split(/\r?\n/)
-                .filter(line =&gt; line.trim() !== &#39;&#39;)
-                .length;
-        }
-
-        if (fs.existsSync(screenshotsDir)) {
-            screenshots = (await fs.promises.readdir(screenshotsDir))
-                .filter(file =&gt; /\.(png|jpe?g)$/i.test(file));
-        }
-
-        return send(res, 200, {
-            labs: labs.length,
-            screenshots: screenshots.length,
-            screenshotFiles: screenshots,
-            requestsLogged
-        });
-    } catch (error) {
-        return send(res, 500, {
-            error: &#39;Unable to load dashboard data&#39;,
-            message: error.message
-        });
-    }
-}
-
-
-    const match = pathname.match(/^\/labs\/(\d{2})(?:\/(run|app)(\/.*)?)?$/);
-
-    if (match) {
-        const [, id, action, rest = &#39;/&#39;] = match;
-        const lab = findLab(id);
-
-        if (!lab) {
-            return send(res, 404, { error: &#39;Lab not found&#39;, id });
-        }
-
-        if (action === &#39;run&#39;) {
-            if (lab.type !== &#39;script&#39;) {
-                return send(res, 400, { error: &#39;This lab is a server lab, not a script lab.&#39; });
-            }
-
-            const filename = lab.files.find(file =&gt; file.endsWith(&#39;.js&#39;));
-
-            if (!filename) {
-                return send(res, 404, { error: &#39;No JavaScript file found for this lab&#39; });
-            }
-
-            const filePath = getLabFile(lab, filename);
-
-            if (!filePath) {
-                return send(res, 404, { error: &#39;Lab file not found&#39; });
-            }
-
-            return execFile(process.execPath, [filePath], {
-                timeout: 5000,
-                cwd: path.dirname(filePath),
-                maxBuffer: 1024 * 1024
-            }, (error, stdout, stderr) =&gt; {
-                send(res, 200, {
-                    ok: !error,
-                    output: stdout,
-                    error: stderr || (error ? error.message : &#39;&#39;)
-                });
-            });
-        }
-
-        if (action === &#39;app&#39;) {
-            const subPath = rest === &#39;/&#39; ? &#39;/&#39; : rest;
-
-            if (id === &#39;02&#39;) return handleLab02(subPath, res);
-            if (id === &#39;03&#39;) return handleLab03(subPath, res);
-            if (id === &#39;04&#39;) return handleLab04(subPath, res);
-
-            return send(res, 400, { error: &#39;This lab does not expose HTTP routes.&#39; });
-        }
-
-        const filesHTML = lab.files.map(file =&gt;
-            `&lt;li&gt;&lt;a href=&quot;/labs/${id}/source/${encodeURIComponent(file)}&quot;&gt;${escapeHTML(file)}&lt;/a&gt;&lt;/li&gt;`
-        ).join(&#39;&#39;);
-
-        return send(res, 200, `&lt;!doctype html&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;title&gt;Lab ${id}&lt;/title&gt;&lt;/head&gt;
-&lt;body style=&quot;font-family:Arial;max-width:850px;margin:40px auto&quot;&gt;
-&lt;h1&gt;Lab ${id}: ${escapeHTML(lab.title)}&lt;/h1&gt;
-&lt;p&gt;Topic: ${escapeHTML(lab.topic)}&lt;/p&gt;
-&lt;p&gt;Type: ${escapeHTML(lab.type)}&lt;/p&gt;
-&lt;h2&gt;JavaScript Files&lt;/h2&gt;&lt;ul&gt;${filesHTML}&lt;/ul&gt;
-
-&lt;h2&gt;Screenshots&lt;/h2&gt;
-&lt;div style=&quot;display:flex;flex-wrap:wrap;gap:16px&quot;&gt;
-${(lab.screenshots || []).map(file =&gt; `
-    &lt;figure style=&quot;margin:0;max-width:320px&quot;&gt;
-        &lt;a href=&quot;/screenshots/${encodeURIComponent(file)}&quot; target=&quot;_blank&quot;&gt;
-            &lt;img
-                src=&quot;/screenshots/${encodeURIComponent(file)}&quot;
-                alt=&quot;${escapeHTML(file)}&quot;
-                style=&quot;width:100%;height:auto;border:1px solid #ccc;border-radius:8px&quot;
-            &gt;
-        &lt;/a&gt;
-        &lt;figcaption&gt;${escapeHTML(file)}&lt;/figcaption&gt;
-    &lt;/figure&gt;
-`).join(&#39;&#39;)}
-&lt;/div&gt;
-
-&lt;p&gt;&lt;a href=&quot;/labs/${id}/run&quot;&gt;Run this lab&lt;/a&gt;&lt;/p&gt;
-${lab.type === &#39;server&#39; ? `&lt;p&gt;&lt;a href=&quot;/labs/${id}/app/&quot;&gt;Open integrated server routes&lt;/a&gt;&lt;/p&gt;` : &#39;&#39;}
-&lt;p&gt;&lt;a href=&quot;/&quot;&gt;Back to portal&lt;/a&gt;&lt;/p&gt;
-&lt;/body&gt;&lt;/html&gt;`, &#39;text/html&#39;);
-    }
-
-    const sourceMatch = pathname.match(/^\/labs\/(\d{2})\/source\/([^/]+)$/);
-
-    if (sourceMatch) {
-        const lab = findLab(sourceMatch[1]);
-
-        if (!lab) return send(res, 404, { error: &#39;Lab not found&#39; });
-
-        let filename;
-        try {
-            filename = decodeURIComponent(sourceMatch[2]);
-        } catch {
-            return send(res, 400, { error: &#39;Invalid filename&#39; });
-        }
-
-        const filePath = getLabFile(lab, filename);
-        if (!filePath) return send(res, 404, { error: &#39;Source file not found&#39; });
-
-        const code = fs.readFileSync(filePath, &#39;utf8&#39;);
-        return send(res, 200,
-            `&lt;html&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;title&gt;${escapeHTML(filename)}&lt;/title&gt;&lt;/head&gt;&lt;body style=&quot;font-family:Arial;margin:30px&quot;&gt;&lt;h2&gt;${escapeHTML(filename)}&lt;/h2&gt;&lt;pre style=&quot;white-space:pre-wrap;overflow-wrap:anywhere&quot;&gt;${escapeHTML(code)}&lt;/pre&gt;&lt;p&gt;&lt;a href=&quot;/labs/${lab.id}&quot;&gt;Back to lab&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;`,
-            &#39;text/html&#39;
-        );
-    }
-
-  
-const screenshotMatch = pathname.match(/^\/screenshots\/([^/]+)$/);
-
-if (screenshotMatch) {
-    const filename = path.basename(screenshotMatch[1]);
-
-    if (!/\.(png|jpe?g)$/i.test(filename)) {
-        return send(res, 400, { error: &#39;Invalid image type&#39; });
-    }
-
-    const imagePath = path.join(
-        __dirname,
-        &#39;public&#39;,
-        &#39;screenshots&#39;,
-        filename
-    );
-
-    if (!fs.existsSync(imagePath)) {
-        return send(res, 404, { error: &#39;Screenshot not found&#39; });
-    }
-
-    const contentType = /\.png$/i.test(filename)
-        ? &#39;image/png&#39;
-        : &#39;image/jpeg&#39;;
-
-    res.writeHead(200, { &#39;Content-Type&#39;: contentType });
-    return fs.createReadStream(imagePath).pipe(res);
-}
-  
-
-    return send(res, 404, { error: &#39;Route not found&#39;, path: pathname });
-});
-
-server.listen(PORT, &#39;0.0.0.0&#39;, () =&gt; {
-    console.log(`Integrated Lab Server running on http://localhost:${PORT}`);
-});
-</code></pre>
-        </div>
     </div>
+
+    <!-- ================= TAB 2: SCREENSHOTS GALLERY ================= -->
+    <div id="tab-screenshots" class="tab-panel">
+      <h2 style="font-family:var(--font-display); font-size:24px; margin-bottom:8px;">Outputs and Visual Proofs</h2>
+      <p style="color:var(--muted); font-size:14px; margin-bottom:20px;">
+        High-resolution screenshots captured during lab execution and terminal tests. Click any image to view in full size.
+      </p>
+      
+      <div style="background:var(--bg-card); border:1px dashed var(--line); border-radius:16px; padding:40px; text-align:center; color:var(--muted); margin-top:20px;">
+        <span style="font-size:32px; display:block; margin-bottom:10px;">📸</span>
+        <strong>No image screenshots found for this lab.</strong>
+        <p style="font-size:13px; margin-top:6px;">All execution outputs can be generated live in the terminal above.</p>
+      </div>
+    </div>
+
+    
+    <!-- ================= TAB 3: README / NOTES ================= -->
+    <div id="tab-readme" class="tab-panel">
+      <div class="lab-header-card" style="margin-top:20px;">
+        <h2 style="font-family:var(--font-display); font-size:24px; margin-bottom:16px;">Lab Documentation & Assignment Notes</h2>
+        <pre style="white-space:pre-wrap; font-family:var(--font-mono); font-size:13.5px; color:#c7dbd0; line-height:1.7;"># Lab 08 – Integrated Node.js Lab Server
+
+## 1. Introduction
+
+Lab 08 is an integrated Node.js web server project that brings together the practical work completed in Labs 01 to 07. It provides a single web portal where users can explore lab details, view JavaScript source code, execute scripts, access server-based applications, and view screenshots of lab outputs.
+
+The project is developed using Node.js and its built-in modules, along with the `slugify` package.
+
+## 2. Objectives
+
+- To integrate Labs 01–07 into one Node.js server.
+- To display lab details and JavaScript source code through a web interface.
+- To execute script-based labs from the portal.
+- To provide access to server-based lab applications.
+- To maintain request logs using the EventEmitter module.
+- To display lab screenshots and dashboard information.
+- To prepare the application for local and cloud deployment.
+
+## 3. Technologies Used
+
+- **Node.js:** Server-side JavaScript runtime.
+- **HTTP module:** Handles incoming requests and responses.
+- **File System (fs):** Reads source files, screenshots, and log files.
+- **Path module:** Manages file and directory paths.
+- **EventEmitter:** Handles request logging events.
+- **Slugify:** Utility package included in the project dependencies.
+- **HTML and CSS:** Used to display the web portal.
+
+## 4. Project Structure
+
+```text
+NodeJS-Lab/
+├── Lab-01/
+├── Lab-2/
+├── Lab-3/
+├── Lab-4/
+├── Lab-05/
+├── Lab-06/
+├── Lab-07/
+└── Lab-08/
+    ├── modules/
+    │   └── logger.js
+    ├── public/
+    │   └── screenshots/
+    ├── logs/
+    ├── build-labs.js
+    ├── labs.js
+    ├── server.js
+    ├── package.json
+    ├── package-lock.json
+    └── .gitignore
+```
+
+The `build-labs.js` file generates the lab registry, `server.js` handles requests, and `logger.js` manages request logging. The screenshots directory stores the lab output images.
+
+## 5. Features
+
+1. **Integrated Portal:** Access Labs 01–07 from one server.
+2. **Lab Details:** View lab descriptions, files, and screenshots.
+3. **Source Code Viewer:** Open JavaScript source code through the browser.
+4. **Script Execution:** Execute supported script-based labs from the portal.
+5. **Server Applications:** Access the integrated versions of the HTTP server, Student Directory, and Advanced Server labs.
+6. **Request Logging:** Record HTTP requests with timestamps.
+7. **Dashboard API:** View lab statistics, screenshot counts, and request-log information.
+8. **Screenshot Gallery:** Display practical output screenshots for available labs.
+9. **Health Check:** Check whether the server is responding.
+10. **Deployment Support:** Use an environment-based port for hosting platforms.
+
+## 6. Installation and Execution
+
+### Requirements
+
+- Node.js installed on the system.
+- npm installed with Node.js.
+- Git (optional, for version control).
+
+### Step 1: Open the project directory
+
+```bash
+cd Lab-08
+```
+
+### Step 2: Install dependencies
+
+```bash
+npm install
+```
+
+### Step 3: Generate the lab registry
+
+```bash
+npm run build
+```
+
+### Step 4: Start the server
+
+```bash
+npm start
+```
+
+### Step 5: Open the portal
+
+Open the following URL in your browser:
+
+`http://localhost:3000`
+
+The application uses the configured port or the hosting platform&#39;s `PORT` environment variable.
+
+## 7. Important Routes
+
+| Route | Purpose |
+|---|---|
+| `/` | Opens the home portal |
+| `/about` | Displays project information |
+| `/health` | Checks server availability |
+| `/labs` | Lists available labs |
+| `/labs/03` | Displays Lab 03 details |
+| `/labs/03/run` | Executes a supported script-based lab |
+| `/labs/03/app/students` | Opens the integrated Student Directory route |
+| `/api/dashboard` | Returns dashboard statistics |
+| `/screenshots/Lab-2-server-running.png` | Displays an available screenshot |
+
+Replace the lab ID and screenshot filename with the appropriate values when accessing other labs. The `/run` route is intended for script-based labs, while `/app/...` is intended for supported server-based labs.
+
+## 8. Request Logging
+
+The project uses Node.js EventEmitter to generate request events. The logger records the HTTP method, requested URL, and timestamp.
+
+Log entries are stored in:
+
+`Lab-08/logs/server.log`
+
+The `logs/` directory is excluded from Git tracking because it contains generated runtime data.
+
+## 9. Screenshots
+
+The project includes a screenshot gallery for available lab outputs. Images are stored in:
+
+`Lab-08/public/screenshots/`
+
+The portal displays the screenshots associated with each lab when corresponding image files are available.
+
+## 10. Testing
+
+The following checks can be performed after starting the server:
+
+- Open the home page.
+- Verify the health-check endpoint.
+- Open the lab listing and individual lab pages.
+- View source code and available screenshots.
+- Test supported script execution routes.
+- Open the integrated server application routes.
+- Check the dashboard API.
+- Verify that requests are recorded in the log file.
+
+## 11. Deployment
+
+The application can be deployed to a Node.js hosting platform such as Render.
+
+General deployment steps:
+
+1. Push the project to GitHub.
+2. Create a new Web Service on Render and connect the repository.
+3. Set the **Root Directory** to `Lab-08`.
+4. Set the **Build Command** to `npm install &amp;&amp; npm run build`.
+5. Set the **Start Command** to `npm start`.
+6. Deploy the application and test its public URL.
+
+The server should listen on `process.env.PORT` and bind to `0.0.0.0` for hosting compatibility. Deployment should be considered complete only after the public URL has been tested successfully.
+
+## 12. Conclusion
+
+Lab 08 combines the practical work from Labs 01–07 into a single web-based application. It provides a convenient way to explore lab details, view source code and screenshots, execute supported scripts, access server applications, and monitor incoming requests. This project improves the organization and accessibility of Node.js practical work and provides experience with server development, file handling, event-driven programming, and deployment.</pre>
+      </div>
+    </div>
+
   </main>
+
+  <!-- ================= LIGHTBOX MODAL ================= -->
+  <div class="lightbox-modal" id="lightboxModal" onclick="closeLightbox(event)">
+    <div class="lightbox-content">
+      <button class="lightbox-close" onclick="closeLightbox(null)">✕</button>
+      <img id="lightboxImg" src="" alt="Zoomed screenshot">
+      <div class="lightbox-caption" id="lightboxCaption"></div>
+    </div>
+  </div>
+
   <footer>
     <strong>Node.js Laboratory Portal</strong>
-    <span>BCA VII Semester • Rishabh Khatiwada</span>
+    <span>BCA VII Semester • Rishabh Khatiwada (Scholar No. 23145018)</span>
   </footer>
+
+  <!-- ================= EMBEDDED LAB RUNNER SCRIPT ================= -->
+  <script>
+    const LAB_FOLDER = "Lab-08";
+    const LAB_ID = "08";
+    const codeFiles = {"build-labs.js":"\r\nconst fs = require('fs');\r\nconst path = require('path');\r\n\r\nconst rootDir = path.resolve(__dirname, '..');\r\nconst outputFile = path.join(__dirname, 'labs.js');\r\nconst screenshotsDir = path.join(__dirname, 'public', 'screenshots');\r\n\r\nconst labFolders = [\r\n    { id: '01', folder: 'Lab-01', title: 'Node.js Basics', type: 'script' },\r\n   { id: '02', folder: 'Lab-02', title: 'HTTP Server', type: 'server' },\r\n{ id: '03', folder: 'Lab-03', title: 'Student Directory', type: 'server' },\r\n{ id: '04', folder: 'Lab-04', title: 'Advanced Server', type: 'server' },\r\n    { id: '05', folder: 'Lab-05', title: 'Asynchronous Node.js', type: 'script' },\r\n    { id: '06', folder: 'Lab-06', title: 'File System & CLI Notes', type: 'script' },\r\n    { id: '07', folder: 'Lab-07', title: 'EventEmitter', type: 'script' }\r\n];\r\n\r\nconst labs = labFolders.map((lab) => {\r\n    const folderPath = path.join(rootDir, lab.folder);\r\n\r\n    if (!fs.existsSync(folderPath)) {\r\n        console.warn(`Skipped: ${lab.folder} folder not found`);\r\n        return null;\r\n    }\r\n\r\n    const files = fs.readdirSync(folderPath)\r\n        .filter(file => file.endsWith('.js'))\r\n        .sort();\r\n\r\n    const screenshots = fs.existsSync(screenshotsDir)\r\n        ? fs.readdirSync(screenshotsDir)\r\n            .filter(file =>\r\n                /\\.(png|jpe?g)$/i.test(file) &&\r\n                file.toLowerCase().startsWith(`lab-${Number(lab.id)}-`)\r\n            )\r\n            .sort()\r\n        : [];\r\n\r\n    return {\r\n        id: lab.id,\r\n        title: lab.title,\r\n        topic: lab.title,\r\n        type: lab.type,\r\n        folder: lab.folder,\r\n        files,\r\n        screenshots\r\n    };\r\n}).filter(Boolean);\r\n\r\nconst content = `// Automatically generated by build-labs.js\r\nmodule.exports = ${JSON.stringify(labs, null, 2)};\r\n`;\r\n\r\nfs.writeFileSync(outputFile, content, 'utf8');\r\n\r\nconsole.log('\\nLab registry generated successfully!');\r\nconsole.log(`Labs discovered: ${labs.length}`);\r\n\r\nlabs.forEach(lab => {\r\n    console.log(\r\n        `Lab ${lab.id}: ${lab.title} ` +\r\n        `(${lab.files.length} JavaScript files, ` +\r\n        `${lab.screenshots.length} screenshots)`\r\n    );\r\n});\r\n\r\nconsole.log(`\\nOutput: ${outputFile}`);\r\n","labs.js":"// Automatically generated by build-labs.js\nmodule.exports = [\n  {\n    \"id\": \"01\",\n    \"title\": \"Node.js Basics\",\n    \"topic\": \"Node.js Basics\",\n    \"type\": \"script\",\n    \"folder\": \"Lab-01\",\n    \"files\": [\n      \"app.js\"\n    ],\n    \"screenshots\": []\n  },\n  {\n    \"id\": \"02\",\n    \"title\": \"HTTP Server\",\n    \"topic\": \"HTTP Server\",\n    \"type\": \"server\",\n    \"folder\": \"Lab-02\",\n    \"files\": [\n      \"server.js\"\n    ],\n    \"screenshots\": [\n      \"Lab-2-server-running.png\"\n    ]\n  },\n  {\n    \"id\": \"03\",\n    \"title\": \"Student Directory\",\n    \"topic\": \"Student Directory\",\n    \"type\": \"server\",\n    \"folder\": \"Lab-03\",\n    \"files\": [\n      \"student-server.js\"\n    ],\n    \"screenshots\": [\n      \"Lab-3-student-server-output-1.png\",\n      \"Lab-3-student-server-output.png\"\n    ]\n  },\n  {\n    \"id\": \"04\",\n    \"title\": \"Advanced Server\",\n    \"topic\": \"Advanced Server\",\n    \"type\": \"server\",\n    \"folder\": \"Lab-04\",\n    \"files\": [\n      \"advanced-server.js\"\n    ],\n    \"screenshots\": [\n      \"Lab-4-advance.output-2.png\",\n      \"Lab-4-advance.output-student.png\",\n      \"Lab-4-advanced-output.png\"\n    ]\n  },\n  {\n    \"id\": \"05\",\n    \"title\": \"Asynchronous Node.js\",\n    \"topic\": \"Asynchronous Node.js\",\n    \"type\": \"script\",\n    \"folder\": \"Lab-05\",\n    \"files\": [\n      \"async-await-version.js\",\n      \"callback-version.js\",\n      \"chaining-version.js\",\n      \"concurrent-orders.js\",\n      \"promise-version.js\"\n    ],\n    \"screenshots\": []\n  },\n  {\n    \"id\": \"06\",\n    \"title\": \"File System & CLI Notes\",\n    \"topic\": \"File System & CLI Notes\",\n    \"type\": \"script\",\n    \"folder\": \"Lab-06\",\n    \"files\": [\n      \"add-note.js\",\n      \"append-file.js\",\n      \"async-await-version.js\",\n      \"delete-file.js\",\n      \"read-async.js\",\n      \"read-notes.js\",\n      \"read-sync.js\",\n      \"write-file.js\"\n    ],\n    \"screenshots\": []\n  },\n  {\n    \"id\": \"07\",\n    \"title\": \"EventEmitter\",\n    \"topic\": \"EventEmitter\",\n    \"type\": \"script\",\n    \"folder\": \"Lab-07\",\n    \"files\": [\n      \"error-handling.js\",\n      \"events-basic.js\",\n      \"notification-center.js\",\n      \"once-vs-on.js\",\n      \"order-system.js\",\n      \"order-tracker.js\"\n    ],\n    \"screenshots\": []\n  }\n];\n","server.js":"const { logger } = require('./modules/logger');\r\nconst http = require('http');\r\nconst fs = require('fs');\r\nconst path = require('path');\r\nconst { execFile } = require('child_process');\r\nconst slugify = require('slugify');\r\nconst labs = require('./labs');\r\n\r\nconst ROOT_DIR = path.resolve(__dirname, '..');\r\nconst PORT = process.env.PORT || 3000;\r\n\r\nfunction send(res, status, data, contentType = 'application/json') {\r\n    res.writeHead(status, { 'Content-Type': `${contentType}; charset=utf-8` });\r\n    res.end(\r\n        contentType.includes('application/json')\r\n            ? JSON.stringify(data, null, 2)\r\n            : data\r\n    );\r\n}\r\n\r\nfunction escapeHTML(value) {\r\n    return String(value)\r\n        .replace(/&/g, '&amp;')\r\n        .replace(/</g, '&lt;')\r\n        .replace(/>/g, '&gt;')\r\n        .replace(/\"/g, '&quot;')\r\n        .replace(/'/g, '&#39;');\r\n}\r\n\r\nfunction findLab(id) {\r\n    return labs.find(lab => lab.id === id);\r\n}\r\n\r\nfunction getLabFile(lab, filename) {\r\n    if (!lab.files.includes(filename) || path.basename(filename) !== filename) {\r\n        return null;\r\n    }\r\n\r\n    const fullPath = path.resolve(ROOT_DIR, lab.folder, filename);\r\n    const labPath = path.resolve(ROOT_DIR, lab.folder) + path.sep;\r\n\r\n    return fullPath.startsWith(labPath) && fs.existsSync(fullPath)\r\n        ? fullPath\r\n        : null;\r\n}\r\n\r\n// Lab-02 route handling\r\nfunction handleLab02(pathname, res) {\r\n    if (pathname === '/' || pathname === '/about' ||\r\n        pathname === '/college' || pathname === '/profile') {\r\n\r\n        if (pathname === '/') {\r\n            return send(res, 200, 'Welcome to my Node.js HTTP Server\\nName: Rishabh Khatiwada\\nLab Assignment: 02', 'text/plain');\r\n        }\r\n\r\n        if (pathname === '/about') {\r\n            return send(res, 200, 'About: BCA VII Semester, Dev Sanskriti Vishwavidyalaya.', 'text/plain');\r\n        }\r\n\r\n        if (pathname === '/college') {\r\n            return send(res, 200, 'Dev Sanskriti Vishwavidyalaya - Computer Science - BCA VII Semester', 'text/plain');\r\n        }\r\n\r\n        return send(res, 200, {\r\n            name: 'Rishabh Khatiwada',\r\n            scholarNumber: '23145018',\r\n            course: 'BCA VII',\r\n            semester: '7th',\r\n            college: 'Dev Sanskriti Vishwavidyalaya',\r\n            subject: 'CS403NOD - Node.js'\r\n        });\r\n    }\r\n\r\n    return send(res, 404, { error: 'Lab-02 route not found', path: pathname });\r\n}\r\n\r\n// Lab-03 student data and routes\r\nconst students = [\r\n    { id: 23145001, name: 'Aditya Soni', course: 'BCA' },\r\n    { id: 23145002, name: 'Bhaskar Mall', course: 'BCA' },\r\n    { id: 23145003, name: 'Ayush Ram Tripathi', course: 'BCA' },\r\n    { id: 23145004, name: 'Yadev Singh Nishad', course: 'BCA' },\r\n    { id: 23145005, name: 'Sayon Koley', course: 'BCA' },\r\n    { id: 23145006, name: 'Rishabh Khatiwada', course: 'BCA' },\r\n    { id: 23145007, name: 'Gauri', course: 'BCA' },\r\n    { id: 23145008, name: 'Kanak Sharma', course: 'BCA' },\r\n    { id: 23145009, name: 'Pragya Gupta', course: 'BCA' },\r\n    { id: 23145010, name: 'Shreya Singh', course: 'BCA' },\r\n    { id: 23145011, name: 'Shreya Kashyap', course: 'BCA' },\r\n    { id: 23145012, name: 'Mikki', course: 'BCA' }\r\n];\r\n\r\nfunction handleLab03(pathname, res) {\r\n    if (pathname === '/') {\r\n        return send(res, 200, 'Welcome to Student Directory Server', 'text/plain');\r\n    }\r\n\r\n    if (pathname === '/students') {\r\n        return send(res, 200, students);\r\n    }\r\n\r\n    const match = pathname.match(/^\\/students\\/(\\d+)$/) ||\r\n                  pathname.match(/^\\/(\\d+)$/);\r\n\r\n    if (match) {\r\n        const student = students.find(s => s.id === Number(match[1]));\r\n        return student\r\n            ? send(res, 200, student)\r\n            : send(res, 404, { error: 'Student not found' });\r\n    }\r\n\r\n    if (pathname.startsWith('/students/')) {\r\n        return send(res, 400, { error: 'Student ID must be a number' });\r\n    }\r\n\r\n    return send(res, 404, { error: 'Route not found' });\r\n}\r\n\r\n// Lab-04 student data and routes\r\nconst advancedStudents = [\r\n    { id: 1, name: 'Aditya Soni', course: 'BCA', marks: 78 },\r\n    { id: 2, name: 'Bhaskar Mall', course: 'BCA', marks: 65 },\r\n    { id: 3, name: 'Gaurav Kumar', course: 'BIT', marks: 82 },\r\n    { id: 4, name: 'Aman Pratap Singh', course: 'BIT', marks: 55 },\r\n    { id: 5, name: 'Sayon Koley', course: 'BBA', marks: 71 },\r\n    { id: 6, name: 'Rishabh Khatiwada', course: 'BCA', marks: 88 },\r\n    { id: 7, name: 'Akansha Rana', course: 'BIT', marks: 91 },\r\n    { id: 8, name: 'Amit Tiwari', course: 'BIT', marks: 62 },\r\n    { id: 9, name: 'Ashutosh Sukla', course: 'BBA', marks: 78 },\r\n    { id: 10, name: 'Rohit Kumar', course: 'BBA', marks: 84 },\r\n    { id: 11, name: 'Raman Singh', course: 'BBA', marks: 92 },\r\n    { id: 12, name: 'Sumit Sukla', course: 'BA', marks: 95 },\r\n    { id: 13, name: 'Ram Mohan', course: 'BA', marks: 88 }\r\n];\r\n\r\nfunction handleLab04(pathname, res) {\r\n    if (pathname === '/') {\r\n        return send(res, 200, 'Welcome to Advanced Node.js Server', 'text/plain');\r\n    }\r\n\r\n    if (pathname === '/students') {\r\n        return send(res, 200, advancedStudents);\r\n    }\r\n\r\n    if (pathname.startsWith('/students/marks/')) {\r\n        const value = pathname.split('/')[3];\r\n\r\n        if (value === undefined || value.trim() === '' || !Number.isFinite(Number(value))) {\r\n            return send(res, 400, { error: 'Provide a valid marks threshold' });\r\n        }\r\n\r\n        return send(res, 200,\r\n            advancedStudents.filter(student => student.marks > Number(value)));\r\n    }\r\n\r\n    if (pathname.startsWith('/students/')) {\r\n        const course = pathname.split('/')[2];\r\n\r\n        return send(res, 200, advancedStudents.filter(\r\n            student => student.course.toLowerCase() === course.toLowerCase()\r\n        ));\r\n    }\r\n\r\n    return send(res, 404, { error: 'Route not found' });\r\n}\r\n\r\nconst server = http.createServer(async (req, res) => {\r\n    const requestURL = new URL(req.url, `http://${req.headers.host || 'localhost'}`);\r\n    const pathname = requestURL.pathname;\r\n\r\n   logger.emit('request', req.method, req.url);\r\n\r\n    if (req.method !== 'GET') {\r\n        return send(res, 405, { error: 'Only GET requests are supported' });\r\n    }\r\n\r\n    if (pathname === '/') {\r\n        const links = labs.map(lab =>\r\n            `<li><a href=\"/labs/${lab.id}\">Lab ${lab.id}: ${escapeHTML(lab.title)}</a></li>`\r\n        ).join('');\r\n\r\n        return send(res, 200, `<!doctype html>\r\n<html>\r\n<head><meta charset=\"utf-8\"><title>Integrated Node.js Lab Portal</title></head>\r\n<body style=\"font-family:Arial;max-width:850px;margin:40px auto\">\r\n<h1>Integrated Node.js Lab Portal</h1>\r\n<p>Name: Rishabh Khatiwada | Course: BCA VII Semester</p>\r\n<p>Environment: ${process.env.RENDER ? 'Live (Render)' : 'Local'}</p>\r\n<h2>Available Labs</h2><ul>${links}</ul>\r\n<p><a href=\"/labs\">JSON Lab Registry</a> | <a href=\"/health\">Health</a> | <a href=\"/about\">About</a></p>\r\n</body></html>`, 'text/html');\r\n    }\r\n\r\n    if (pathname === '/health') {\r\n        return send(res, 200, {\r\n            status: 'ok',\r\n            environment: process.env.RENDER ? 'live (Render)' : 'local',\r\n            uptimeSeconds: Math.floor(process.uptime())\r\n        });\r\n    }\r\n\r\n    if (pathname === '/about') {\r\n        return send(res, 200, {\r\n            project: 'Lab-08 Integrated Node.js Server',\r\n            student: process.env.STUDENT_NAME || 'Rishabh Khatiwada',\r\n            labs: labs.length\r\n        });\r\n    }\r\n\r\n    if (pathname === '/labs') {\r\n        return send(res, 200, labs.map(lab => ({\r\n            ...lab,\r\n            slug: slugify(lab.title, { lower: true, strict: true })\r\n        })));\r\n    }\r\n\r\n   \r\nif (pathname === '/api/dashboard') {\r\n    const logsDir = path.join(__dirname, 'logs');\r\n    const screenshotsDir = path.join(__dirname, 'public', 'screenshots');\r\n    const logFile = path.join(logsDir, 'server.log');\r\n\r\n    let requestsLogged = 0;\r\n    let screenshots = [];\r\n\r\n    try {\r\n        if (fs.existsSync(logFile)) {\r\n            const logContent = await fs.promises.readFile(logFile, 'utf8');\r\n\r\n            requestsLogged = logContent\r\n                .split(/\\r?\\n/)\r\n                .filter(line => line.trim() !== '')\r\n                .length;\r\n        }\r\n\r\n        if (fs.existsSync(screenshotsDir)) {\r\n            screenshots = (await fs.promises.readdir(screenshotsDir))\r\n                .filter(file => /\\.(png|jpe?g)$/i.test(file));\r\n        }\r\n\r\n        return send(res, 200, {\r\n            labs: labs.length,\r\n            screenshots: screenshots.length,\r\n            screenshotFiles: screenshots,\r\n            requestsLogged\r\n        });\r\n    } catch (error) {\r\n        return send(res, 500, {\r\n            error: 'Unable to load dashboard data',\r\n            message: error.message\r\n        });\r\n    }\r\n}\r\n\r\n\r\n    const match = pathname.match(/^\\/labs\\/(\\d{2})(?:\\/(run|app)(\\/.*)?)?$/);\r\n\r\n    if (match) {\r\n        const [, id, action, rest = '/'] = match;\r\n        const lab = findLab(id);\r\n\r\n        if (!lab) {\r\n            return send(res, 404, { error: 'Lab not found', id });\r\n        }\r\n\r\n        if (action === 'run') {\r\n            if (lab.type !== 'script') {\r\n                return send(res, 400, { error: 'This lab is a server lab, not a script lab.' });\r\n            }\r\n\r\n            const filename = lab.files.find(file => file.endsWith('.js'));\r\n\r\n            if (!filename) {\r\n                return send(res, 404, { error: 'No JavaScript file found for this lab' });\r\n            }\r\n\r\n            const filePath = getLabFile(lab, filename);\r\n\r\n            if (!filePath) {\r\n                return send(res, 404, { error: 'Lab file not found' });\r\n            }\r\n\r\n            return execFile(process.execPath, [filePath], {\r\n                timeout: 5000,\r\n                cwd: path.dirname(filePath),\r\n                maxBuffer: 1024 * 1024\r\n            }, (error, stdout, stderr) => {\r\n                send(res, 200, {\r\n                    ok: !error,\r\n                    output: stdout,\r\n                    error: stderr || (error ? error.message : '')\r\n                });\r\n            });\r\n        }\r\n\r\n        if (action === 'app') {\r\n            const subPath = rest === '/' ? '/' : rest;\r\n\r\n            if (id === '02') return handleLab02(subPath, res);\r\n            if (id === '03') return handleLab03(subPath, res);\r\n            if (id === '04') return handleLab04(subPath, res);\r\n\r\n            return send(res, 400, { error: 'This lab does not expose HTTP routes.' });\r\n        }\r\n\r\n        const filesHTML = lab.files.map(file =>\r\n            `<li><a href=\"/labs/${id}/source/${encodeURIComponent(file)}\">${escapeHTML(file)}</a></li>`\r\n        ).join('');\r\n\r\n        return send(res, 200, `<!doctype html>\r\n<html><head><meta charset=\"utf-8\"><title>Lab ${id}</title></head>\r\n<body style=\"font-family:Arial;max-width:850px;margin:40px auto\">\r\n<h1>Lab ${id}: ${escapeHTML(lab.title)}</h1>\r\n<p>Topic: ${escapeHTML(lab.topic)}</p>\r\n<p>Type: ${escapeHTML(lab.type)}</p>\r\n<h2>JavaScript Files</h2><ul>${filesHTML}</ul>\r\n\r\n<h2>Screenshots</h2>\r\n<div style=\"display:flex;flex-wrap:wrap;gap:16px\">\r\n${(lab.screenshots || []).map(file => `\r\n    <figure style=\"margin:0;max-width:320px\">\r\n        <a href=\"/screenshots/${encodeURIComponent(file)}\" target=\"_blank\">\r\n            <img\r\n                src=\"/screenshots/${encodeURIComponent(file)}\"\r\n                alt=\"${escapeHTML(file)}\"\r\n                style=\"width:100%;height:auto;border:1px solid #ccc;border-radius:8px\"\r\n            >\r\n        </a>\r\n        <figcaption>${escapeHTML(file)}</figcaption>\r\n    </figure>\r\n`).join('')}\r\n</div>\r\n\r\n<p><a href=\"/labs/${id}/run\">Run this lab</a></p>\r\n${lab.type === 'server' ? `<p><a href=\"/labs/${id}/app/\">Open integrated server routes</a></p>` : ''}\r\n<p><a href=\"/\">Back to portal</a></p>\r\n</body></html>`, 'text/html');\r\n    }\r\n\r\n    const sourceMatch = pathname.match(/^\\/labs\\/(\\d{2})\\/source\\/([^/]+)$/);\r\n\r\n    if (sourceMatch) {\r\n        const lab = findLab(sourceMatch[1]);\r\n\r\n        if (!lab) return send(res, 404, { error: 'Lab not found' });\r\n\r\n        let filename;\r\n        try {\r\n            filename = decodeURIComponent(sourceMatch[2]);\r\n        } catch {\r\n            return send(res, 400, { error: 'Invalid filename' });\r\n        }\r\n\r\n        const filePath = getLabFile(lab, filename);\r\n        if (!filePath) return send(res, 404, { error: 'Source file not found' });\r\n\r\n        const code = fs.readFileSync(filePath, 'utf8');\r\n        return send(res, 200,\r\n            `<html><head><meta charset=\"utf-8\"><title>${escapeHTML(filename)}</title></head><body style=\"font-family:Arial;margin:30px\"><h2>${escapeHTML(filename)}</h2><pre style=\"white-space:pre-wrap;overflow-wrap:anywhere\">${escapeHTML(code)}</pre><p><a href=\"/labs/${lab.id}\">Back to lab</a></p></body></html>`,\r\n            'text/html'\r\n        );\r\n    }\r\n\r\n  \r\nconst screenshotMatch = pathname.match(/^\\/screenshots\\/([^/]+)$/);\r\n\r\nif (screenshotMatch) {\r\n    const filename = path.basename(screenshotMatch[1]);\r\n\r\n    if (!/\\.(png|jpe?g)$/i.test(filename)) {\r\n        return send(res, 400, { error: 'Invalid image type' });\r\n    }\r\n\r\n    const imagePath = path.join(\r\n        __dirname,\r\n        'public',\r\n        'screenshots',\r\n        filename\r\n    );\r\n\r\n    if (!fs.existsSync(imagePath)) {\r\n        return send(res, 404, { error: 'Screenshot not found' });\r\n    }\r\n\r\n    const contentType = /\\.png$/i.test(filename)\r\n        ? 'image/png'\r\n        : 'image/jpeg';\r\n\r\n    res.writeHead(200, { 'Content-Type': contentType });\r\n    return fs.createReadStream(imagePath).pipe(res);\r\n}\r\n  \r\n\r\n    return send(res, 404, { error: 'Route not found', path: pathname });\r\n});\r\n\r\nserver.listen(PORT, '0.0.0.0', () => {\r\n    console.log(`Integrated Lab Server running on http://localhost:${PORT}`);\r\n});\r\n"};
+    let currentFileName = "build-labs.js";
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      
+      const targetPanel = document.getElementById(tabId);
+      if (targetPanel) targetPanel.classList.add('active');
+      
+      event.currentTarget.classList.add('active');
+    }
+
+    function onFileChange(newFile) {
+      currentFileName = newFile;
+      document.getElementById('active-filename-display').textContent = newFile;
+      document.getElementById('code-viewer-title').textContent = newFile;
+      
+      const code = codeFiles[newFile] || '// File not found';
+      document.getElementById('source-code-display').textContent = code;
+    }
+
+    function clearTerminal() {
+      document.getElementById('terminal-output').innerHTML = '<span class="log-dim">// Terminal cleared. Ready for execution.</span>';
+      document.getElementById('status-text').textContent = 'Ready';
+      document.getElementById('status-indicator').className = 'status-indicator ready';
+      document.getElementById('execution-time-text').textContent = 'Time: 0ms';
+    }
+
+    function copyCurrentCode() {
+      const code = codeFiles[currentFileName] || '';
+      navigator.clipboard.writeText(code).then(() => {
+        const btn = document.getElementById('copyCodeBtn');
+        const orig = btn.textContent;
+        btn.textContent = '✓ Copied!';
+        btn.style.borderColor = 'var(--green)';
+        btn.style.color = 'var(--green)';
+        setTimeout(() => {
+          btn.textContent = orig;
+          btn.style.borderColor = '';
+          btn.style.color = '';
+        }, 2000);
+      });
+    }
+
+    // Lightbox functions
+    function openLightbox(url, caption) {
+      const modal = document.getElementById('lightboxModal');
+      const img = document.getElementById('lightboxImg');
+      const cap = document.getElementById('lightboxCaption');
+      img.src = url;
+      cap.textContent = caption;
+      modal.classList.add('active');
+    }
+
+    function closeLightbox(e) {
+      if (!e || e.target.id === 'lightboxModal' || e.target.classList.contains('lightbox-close')) {
+        document.getElementById('lightboxModal').classList.remove('active');
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.getElementById('lightboxModal').classList.remove('active');
+      }
+    });
+
+    // Interactive Route Tester for Server Labs
+    async function testRoute(labId, routePath) {
+      const ind = document.getElementById('res-route-indicator');
+      const badge = document.getElementById('res-status-badge');
+      const out = document.getElementById('res-output');
+
+      ind.textContent = 'Requesting: GET ' + routePath + '...';
+      badge.style.display = 'none';
+      out.textContent = 'Sending HTTP request to server...';
+
+      try {
+        const res = await fetch('/api/route/' + labId + routePath);
+        const contentType = res.headers.get('content-type') || '';
+        let body;
+        
+        if (contentType.includes('application/json')) {
+          const json = await res.json();
+          body = JSON.stringify(json, null, 2);
+        } else {
+          body = await res.text();
+        }
+
+        ind.textContent = 'GET ' + routePath;
+        badge.style.display = 'inline-block';
+        badge.className = 'status-badge ' + (res.status === 200 ? 'status-200' : 'status-404');
+        badge.textContent = res.status + ' ' + (res.status === 200 ? 'OK' : 'Not Found');
+        out.textContent = body;
+      } catch (err) {
+        // Fallback simulation if running without live server
+        ind.textContent = 'GET ' + routePath + ' (Simulated)';
+        badge.style.display = 'inline-block';
+        badge.className = 'status-badge status-200';
+        badge.textContent = '200 OK (Client Shim)';
+        
+        if (routePath === '/' || routePath === '/about') {
+          out.textContent = 'Response from Lab ' + labId + ' server for route: ' + routePath;
+        } else if (routePath.includes('students')) {
+          out.textContent = JSON.stringify({
+            message: "Student records response",
+            lab: labId,
+            route: routePath,
+            timestamp: new Date().toISOString()
+          }, null, 2);
+        } else {
+          out.textContent = 'HTTP/1.1 200 OK\nRoute: ' + routePath;
+        }
+      }
+    }
+
+    // Live Execution Engine
+    async function runCurrentCode() {
+      const btn = document.getElementById('runCodeBtn');
+      const icon = document.getElementById('run-icon');
+      const text = document.getElementById('run-text');
+      const out = document.getElementById('terminal-output');
+      const statusInd = document.getElementById('status-indicator');
+      const statusTxt = document.getElementById('status-text');
+      const timeTxt = document.getElementById('execution-time-text');
+
+      btn.disabled = true;
+      icon.textContent = '⏳';
+      text.textContent = 'Running...';
+      statusInd.className = 'status-indicator running';
+      statusTxt.textContent = 'Executing...';
+      
+      out.innerHTML = '<span class="log-dim">$ node ' + currentFileName + '</span>\n';
+
+      const startTime = performance.now();
+
+      // 1. Try Backend Node Runner (/api/run)
+      try {
+        const response = await fetch('/api/run', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            lab: LAB_FOLDER,
+            file: currentFileName
+          })
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          const elapsed = Math.round(result.duration || (performance.now() - startTime));
+          timeTxt.textContent = 'Time: ' + elapsed + 'ms';
+
+          if (result.output) {
+            out.innerHTML += '<span class="log-stdout">' + escapeClient(result.output) + '</span>';
+          }
+          if (result.error) {
+            out.innerHTML += '<span class="log-stderr">' + escapeClient(result.error) + '</span>';
+          }
+
+          statusInd.className = 'status-indicator ' + (result.ok ? 'ready' : 'error');
+          statusTxt.textContent = result.ok ? 'Finished (Exit 0)' : 'Error (Exit 1)';
+          resetRunButton();
+          return;
+        }
+      } catch (backendErr) {
+        // Backend not reached, fall back to browser sandbox
+      }
+
+      // 2. Browser Sandbox Fallback Runner
+      runInBrowserSandbox();
+    }
+
+    function runInBrowserSandbox() {
+      const out = document.getElementById('terminal-output');
+      const statusInd = document.getElementById('status-indicator');
+      const statusTxt = document.getElementById('status-text');
+      const timeTxt = document.getElementById('execution-time-text');
+      const startTime = performance.now();
+
+      const rawCode = codeFiles[currentFileName] || '';
+      
+      // Sandbox mocks for Node modules
+      let logs = [];
+      const customConsole = {
+        log: (...args) => {
+          logs.push({ type: 'stdout', msg: args.map(formatArg).join(' ') });
+        },
+        error: (...args) => {
+          logs.push({ type: 'error', msg: args.map(formatArg).join(' ') });
+        },
+        warn: (...args) => {
+          logs.push({ type: 'warn', msg: args.map(formatArg).join(' ') });
+        },
+        info: (...args) => {
+          logs.push({ type: 'info', msg: args.map(formatArg).join(' ') });
+        }
+      };
+
+      function formatArg(arg) {
+        if (typeof arg === 'object' && arg !== null) {
+          try { return JSON.stringify(arg, null, 2); } catch { return String(arg); }
+        }
+        return String(arg);
+      }
+
+      // EventEmitter Browser Shim
+      class BrowserEventEmitter {
+        constructor() { this._events = {}; }
+        on(event, listener) {
+          (this._events[event] = this._events[event] || []).push(listener);
+          return this;
+        }
+        once(event, listener) {
+          const wrapper = (...args) => {
+            this.off(event, wrapper);
+            listener(...args);
+          };
+          return this.on(event, wrapper);
+        }
+        emit(event, ...args) {
+          const list = (this._events[event] || []).slice();
+          list.forEach(fn => fn(...args));
+          return list.length > 0;
+        }
+        off(event, listener) {
+          if (this._events[event]) {
+            this._events[event] = this._events[event].filter(fn => fn !== listener);
+          }
+          return this;
+        }
+      }
+
+      // Virtual in-memory FS
+      const virtualFS = {
+        'sample.txt': 'Welcome to Node.js File System!',
+        'notes.txt': '1. Learn Node.js\n2. Build Practical Labs\n3. Deploy Server',
+        'output.txt': 'Previous output content'
+      };
+
+      const mockFS = {
+        readFileSync: (file) => virtualFS[file] || 'Sample content of ' + file,
+        readFile: (file, enc, cb) => {
+          const callback = typeof enc === 'function' ? enc : cb;
+          setTimeout(() => callback(null, virtualFS[file] || 'Content of ' + file), 10);
+        },
+        writeFileSync: (file, data) => { virtualFS[file] = data; },
+        writeFile: (file, data, cb) => {
+          virtualFS[file] = data;
+          if (cb) setTimeout(() => cb(null), 10);
+        },
+        appendFileSync: (file, data) => { virtualFS[file] = (virtualFS[file] || '') + data; },
+        appendFile: (file, data, cb) => {
+          virtualFS[file] = (virtualFS[file] || '') + data;
+          if (cb) setTimeout(() => cb(null), 10);
+        },
+        unlinkSync: (file) => { delete virtualFS[file]; },
+        unlink: (file, cb) => {
+          delete virtualFS[file];
+          if (cb) setTimeout(() => cb(null), 10);
+        }
+      };
+
+      const mockRequire = (mod) => {
+        if (mod === 'events') return BrowserEventEmitter;
+        if (mod === 'fs') return mockFS;
+        if (mod === 'path') return { join: (...args) => args.join('/'), resolve: (...args) => args.join('/') };
+        if (mod === 'http') return { createServer: () => ({ listen: (p, cb) => { customConsole.log('Server started on port', p); if(cb) cb(); } }) };
+        return {};
+      };
+
+      try {
+        // Transform Node code for browser execution
+        const wrappedCode = `(async function(console, require, EventEmitter) {
+          ${rawCode}
+        })`;
+        
+        const fn = eval(wrappedCode);
+        fn(customConsole, mockRequire, BrowserEventEmitter)
+          .then(() => {
+            const elapsed = Math.round(performance.now() - startTime);
+            timeTxt.textContent = 'Time: ' + elapsed + 'ms';
+            renderLogs(logs);
+            statusInd.className = 'status-indicator ready';
+            statusTxt.textContent = 'Executed (Browser Sandbox)';
+            resetRunButton();
+          })
+          .catch(err => {
+            logs.push({ type: 'error', msg: 'Runtime Error: ' + err.message });
+            renderLogs(logs);
+            statusInd.className = 'status-indicator error';
+            statusTxt.textContent = 'Error';
+            resetRunButton();
+          });
+      } catch (compileErr) {
+        logs.push({ type: 'error', msg: 'Execution Error: ' + compileErr.message });
+        renderLogs(logs);
+        statusInd.className = 'status-indicator error';
+        statusTxt.textContent = 'Syntax/Compile Error';
+        resetRunButton();
+      }
+    }
+
+    function renderLogs(logs) {
+      const out = document.getElementById('terminal-output');
+      if (!logs.length) {
+        out.innerHTML += '<span class="log-stdout">// Code executed with no standard console output.</span>\n';
+        return;
+      }
+      for (const item of logs) {
+        const cls = item.type === 'error' ? 'log-error' : item.type === 'warn' ? 'log-warn' : item.type === 'info' ? 'log-info' : 'log-stdout';
+        out.innerHTML += '<span class="' + cls + '">' + escapeClient(item.msg) + '</span>\n';
+      }
+    }
+
+    function escapeClient(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    function resetRunButton() {
+      const btn = document.getElementById('runCodeBtn');
+      document.getElementById('run-icon').textContent = '▶';
+      document.getElementById('run-text').textContent = 'Run Code';
+      btn.disabled = false;
+    }
+  </script>
 </body>
 </html>

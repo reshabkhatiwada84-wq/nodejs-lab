@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,6 +8,14 @@
 
   <title>Node.js Laboratory Portal | Rishabh Khatiwada</title>
 
+  <meta
+    name="description"
+    content="Explore Node.js practical labs, source code, screenshots and assignments by Rishabh Khatiwada."
+  >
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -15,7 +24,6 @@
   <!-- ================= NAVIGATION ================= -->
 
   <nav class="nav">
-
     <div class="logo">
       <span>⬢</span>
       Node.js Lab Portal
@@ -26,11 +34,11 @@
       <a href="#labs">Explore Labs</a>
       <a
         href="https://github.com/reshabkhatiwada84-wq/nodejs-lab"
-        target="_blank">
+        target="_blank"
+        rel="noopener noreferrer">
         GitHub ↗
       </a>
     </div>
-
   </nav>
 
 
@@ -43,6 +51,7 @@
     <div class="hero-inner">
 
       <span class="badge">
+        <span class="badge-dot"></span>
         BCA VII SEMESTER • NODE.JS
       </span>
 
@@ -53,52 +62,42 @@
 
       <p class="subtitle">
         A single place to explore my practical work, programs,
-        outputs, assignments and learning journey from Lab 01 to Lab 06.
+        outputs, assignments and learning journey across my Node.js labs.
       </p>
-
 
       <!-- STUDENT PROFILE -->
 
       <div class="profile">
-
-        <div class="avatar">
-          RK
-        </div>
+        <div class="avatar">RK</div>
 
         <div>
-          <strong>
-            Rishabh Khatiwada
-          </strong>
+          <strong>Rishabh Khatiwada</strong>
 
           <span>
             Scholar No. 23145018 • Dev Sanskriti Vishwavidyalaya
           </span>
         </div>
-
       </div>
-
 
       <!-- HERO BUTTONS -->
 
       <div class="actions">
 
-        <a
-          class="primary"
-          href="#labs">
+        <a class="primary" href="#labs">
           Explore Laboratory ↓
         </a>
 
         <a
           class="secondary"
           href="https://github.com/reshabkhatiwada84-wq/nodejs-lab"
-          target="_blank">
+          target="_blank"
+          rel="noopener noreferrer">
           GitHub Repository ↗
         </a>
 
       </div>
 
     </div>
-
   </header>
 
 
@@ -106,27 +105,22 @@
 
   <main>
 
-
     <!-- INTRODUCTION -->
 
     <section class="intro">
 
       <div>
-
-        <small>
-          WELCOME
-        </small>
+        <small>WELCOME</small>
 
         <h2>
           Everything in one place.
         </h2>
-
       </div>
 
       <p>
         Navigate through each practical lab without searching
-        through different folders. Each lab contains its
-        objectives, tasks, source code, outputs and documentation.
+        through different folders. Explore available practical work,
+        source code, outputs and documentation from one place.
       </p>
 
     </section>
@@ -138,13 +132,9 @@
 
       <div class="section-title">
 
-        <small>
-          LABORATORY WORK
-        </small>
+        <small>LABORATORY WORK</small>
 
-        <h2>
-          Explore My Labs
-        </h2>
+        <h2>Explore My Labs</h2>
 
         <p>
           Select a laboratory below to view its complete
@@ -154,166 +144,146 @@
       </div>
 
 
-      <!-- ================= LAB CARDS ================= -->
+      <!--
+        AUTOMATIC LAB CARDS
 
-      <div class="grid">
+        Do not manually add individual lab cards here.
+        generate-labs.js inserts cards between these markers
+        after scanning the Lab-01, Lab-02, Lab-03... folders.
+      -->
 
+      <div class="grid" id="lab-grid">
 
-        <!-- LAB 01 -->
-
-        <article class="card">
-
-          <b>01</b>
-
-          <div class="emoji">
-            🟢
-          </div>
-
-          <h3>
-            Node.js Basics
-          </h3>
-
-          <p>
-            Introduction to Node.js, npm, first program,
-            console, variables, data types and basic concepts.
-          </p>
-
-          <a href="labs/lab01.html">
-            Open Lab →
-          </a>
-
-        </article>
-
-
-        <!-- LAB 02 -->
+        <!-- AUTO-LABS-START -->
 
         <article class="card">
-
-          <b>02</b>
-
-          <div class="emoji">
-            🌐
+          <div class="card-top">
+            <span class="card-num">01</span>
+            <span class="card-tag script">🟢 SCRIPT LAB</span>
           </div>
-
-          <h3>
-            HTTP Server
-          </h3>
-
-          <p>
-            HTTP module, server creation, routing,
-            request and response handling, JSON and 404 responses.
-          </p>
-
-          <a href="labs/lab02.html">
-            Open Lab →
-          </a>
-
+          <div class="emoji">🟢</div>
+          <h3>Node.js Lab Assignment 01</h3>
+          <p>Introduction to Node.js, npm, first program, console, variables and data types.</p>
+          <div class="card-footer">
+            <a href="labs/lab01.html">
+              Open Lab →
+            </a>
+            <span class="pill-run">▶ Run in Web</span>
+          </div>
         </article>
-
-
-        <!-- LAB 03 -->
 
         <article class="card">
-
-          <b>03</b>
-
-          <div class="emoji">
-            👨‍🎓
+          <div class="card-top">
+            <span class="card-num">02</span>
+            <span class="card-tag server">🌐 HTTP SERVER</span>
           </div>
-
-          <h3>
-            Student Directory
-          </h3>
-
-          <p>
-            A practical Node.js server for displaying
-            student information using different routes.
-          </p>
-
-          <a href="labs/lab03.html">
-            Open Lab →
-          </a>
-
+          <div class="emoji">🌐</div>
+          <h3>Node.js Lab Assignment - 02</h3>
+          <p>HTTP module, server creation, routing and request-response handling.</p>
+          <div class="card-footer">
+            <a href="labs/lab02.html">
+              Open Lab →
+            </a>
+            <span class="pill-run">▶ Run in Web</span>
+          </div>
         </article>
-
-
-        <!-- LAB 04 -->
 
         <article class="card">
-
-          <b>04</b>
-
-          <div class="emoji">
-            ⚙️
+          <div class="card-top">
+            <span class="card-num">03</span>
+            <span class="card-tag server">🌐 HTTP SERVER</span>
           </div>
-
-          <h3>
-            Advanced Server
-          </h3>
-
-          <p>
-            Student records, routing, filtering and
-            practical server-side operations using Node.js.
-          </p>
-
-          <a href="labs/lab04.html">
-            Open Lab →
-          </a>
-
+          <div class="emoji">👨‍🎓</div>
+          <h3>Student Directory Server</h3>
+          <p>A Node.js server for displaying student information using different routes.</p>
+          <div class="card-footer">
+            <a href="labs/lab03.html">
+              Open Lab →
+            </a>
+            <span class="pill-run">▶ Run in Web</span>
+          </div>
         </article>
-
-
-        <!-- LAB 05 -->
 
         <article class="card">
-
-          <b>05</b>
-
-          <div class="emoji">
-            ⚡
+          <div class="card-top">
+            <span class="card-num">04</span>
+            <span class="card-tag server">🌐 HTTP SERVER</span>
           </div>
-
-          <h3>
-            Asynchronous Node.js
-          </h3>
-
-          <p>
-            Callbacks, Promises, Promise chaining,
-            async/await, Promise.all() and Event Loop.
-          </p>
-
-          <a href="labs/lab05.html">
-            Open Lab →
-          </a>
-
+          <div class="emoji">⚙️</div>
+          <h3>Node.js Lab Assignment - 04</h3>
+          <p>Student records, routing, filtering and server-side operations using Node.js.</p>
+          <div class="card-footer">
+            <a href="labs/lab04.html">
+              Open Lab →
+            </a>
+            <span class="pill-run">▶ Run in Web</span>
+          </div>
         </article>
-
-
-        <!-- LAB 06 -->
 
         <article class="card">
-
-          <b>06</b>
-
-          <div class="emoji">
-            📝
+          <div class="card-top">
+            <span class="card-num">05</span>
+            <span class="card-tag script">🟢 SCRIPT LAB</span>
           </div>
-
-          <h3>
-            File System & CLI Notes
-          </h3>
-
-          <p>
-            File-system operations, synchronous and asynchronous
-            file handling and the command-line Notes App.
-          </p>
-
-          <a href="labs/lab06.html">
-            Open Lab →
-          </a>
-
+          <div class="emoji">⚡</div>
+          <h3>Node.js Lab - 05</h3>
+          <p>Simulating Food Delivery Tracker with callbacks, Promises, async/await and concurrency.</p>
+          <div class="card-footer">
+            <a href="labs/lab05.html">
+              Open Lab →
+            </a>
+            <span class="pill-run">▶ Run in Web</span>
+          </div>
         </article>
 
+        <article class="card">
+          <div class="card-top">
+            <span class="card-num">06</span>
+            <span class="card-tag script">🟢 SCRIPT LAB</span>
+          </div>
+          <div class="emoji">📝</div>
+          <h3>Node.js Lab 06 - File System</h3>
+          <p>File-system operations, synchronous/asynchronous file handling and CLI Notes app.</p>
+          <div class="card-footer">
+            <a href="labs/lab06.html">
+              Open Lab →
+            </a>
+            <span class="pill-run">▶ Run in Web</span>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-top">
+            <span class="card-num">07</span>
+            <span class="card-tag script">🟢 SCRIPT LAB</span>
+          </div>
+          <div class="emoji">📡</div>
+          <h3>Lab 07 – EventEmitter and Event-Driven Programming</h3>
+          <p>Node.js events, EventEmitter, listeners, order tracking and event-driven architecture.</p>
+          <div class="card-footer">
+            <a href="labs/lab07.html">
+              Open Lab →
+            </a>
+            <span class="pill-run">▶ Run in Web</span>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-top">
+            <span class="card-num">08</span>
+            <span class="card-tag server">🌐 HTTP SERVER</span>
+          </div>
+          <div class="emoji">🚀</div>
+          <h3>Lab 08 – Integrated Node.js Lab Server</h3>
+          <p>A unified portal bringing previous Node.js practical labs together with live execution.</p>
+          <div class="card-footer">
+            <a href="labs/lab08.html">
+              Open Lab →
+            </a>
+            <span class="pill-run">▶ Run in Web</span>
+          </div>
+        </article>
+        <!-- AUTO-LABS-END -->
 
       </div>
 
@@ -324,9 +294,7 @@
 
     <section class="journey">
 
-      <small>
-        LEARNING JOURNEY
-      </small>
+      <small>LEARNING JOURNEY</small>
 
       <h2>
         From fundamentals to practical applications.
@@ -334,33 +302,34 @@
 
       <p>
         My Node.js practical journey gradually moves from
-        basic concepts to servers, asynchronous programming
-        and file-system based applications.
+        basic concepts to servers, asynchronous programming,
+        file-system operations and integrated applications.
       </p>
 
       <div class="steps">
 
         <span>01 Basics</span>
-
         <i>→</i>
 
         <span>02 HTTP</span>
-
         <i>→</i>
 
         <span>03 Directory</span>
-
         <i>→</i>
 
         <span>04 Server</span>
-
         <i>→</i>
 
         <span>05 Async</span>
-
         <i>→</i>
 
         <span>06 CLI</span>
+        <i>→</i>
+
+        <span>07 Events</span>
+        <i>→</i>
+
+        <span>08 Integration</span>
 
       </div>
 
@@ -371,9 +340,7 @@
 
     <section class="github-section">
 
-      <small>
-        SOURCE CODE
-      </small>
+      <small>SOURCE CODE</small>
 
       <h2>
         Explore the complete source code
@@ -387,12 +354,12 @@
       <a
         class="primary"
         href="https://github.com/reshabkhatiwada84-wq/nodejs-lab"
-        target="_blank">
+        target="_blank"
+        rel="noopener noreferrer">
         View GitHub Repository ↗
       </a>
 
     </section>
-
 
   </main>
 
@@ -401,16 +368,13 @@
 
   <footer>
 
-    <strong>
-      Node.js Laboratory Portal
-    </strong>
+    <strong>Node.js Laboratory Portal</strong>
 
     <span>
       BCA VII Semester • Rishabh Khatiwada
     </span>
 
   </footer>
-
 
 </body>
 
